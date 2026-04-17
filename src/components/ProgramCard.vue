@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import type { Program } from '@/stores/nti'
+import { RouterLink } from "vue-router";
+import type { Program } from "@/stores/nti";
 
 const props = defineProps<{
-  program: Program
-}>()
+  program: Program;
+}>();
 
-const isA = props.program.id === 'A'
+const isA = props.program.id === "A";
 </script>
 
 <template>
@@ -36,7 +36,9 @@ const isA = props.program.id === 'A'
     </ul>
 
     <div class="prog-card__tags">
-      <span v-for="tag in program.tags" :key="tag" class="prog-card__tag">{{ tag }}</span>
+      <span v-for="tag in program.tags" :key="tag" class="prog-card__tag">
+        {{ tag }}
+      </span>
     </div>
 
     <RouterLink
@@ -63,7 +65,7 @@ const isA = props.program.id === 'A'
   position: absolute;
   top: 20px;
   right: 30px;
-  font-family: 'Fraunces', serif;
+  font-family: "Fraunces", serif;
   font-size: 88px;
   font-weight: 300;
   color: var(--gray-10);
@@ -149,7 +151,7 @@ const isA = props.program.id === 'A'
 
 .prog-card__btn {
   display: inline-block;
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 13px;
   font-weight: 500;
   padding: 11px 22px;

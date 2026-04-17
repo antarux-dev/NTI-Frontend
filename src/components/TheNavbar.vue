@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref } from "vue";
+import { RouterLink } from "vue-router";
 
-const mobileOpen = ref(false)
+const mobileOpen = ref(false);
 
 const navLinks = [
-  { label: 'O nás', to: '/o-nti' },
-  { label: 'Programy', to: '/#programy' },
-  { label: 'Firmy', to: '/#firmy' },
-  { label: 'Partneri', to: '/#partneri' },
-  { label: 'Kontakt', to: '/kontakt' },
-]
+  { label: "O nás", to: "/o-nti" },
+  { label: "Programy", to: "/#programy" },
+  { label: "Firmy", to: "/#firmy" },
+  { label: "Partneri", to: "/#partneri" },
+  { label: "Kontakt", to: "/kontakt" },
+];
 </script>
 
 <template>
@@ -45,9 +45,11 @@ const navLinks = [
       </div>
 
       <!-- Mobile toggle -->
-      <button class="navbar__toggle" @click="mobileOpen = !mobileOpen" aria-label="Menu">
+      <button class="navbar__toggle" aria-label="Menu" @click="mobileOpen = !mobileOpen">
         <span :class="['navbar__toggle-bar', { 'navbar__toggle-bar--open': mobileOpen }]"></span>
-        <span :class="['navbar__toggle-bar', { 'navbar__toggle-bar--open-mid': mobileOpen }]"></span>
+        <span
+          :class="['navbar__toggle-bar', { 'navbar__toggle-bar--open-mid': mobileOpen }]"
+        ></span>
         <span :class="['navbar__toggle-bar', { 'navbar__toggle-bar--open': mobileOpen }]"></span>
       </button>
     </div>
@@ -123,7 +125,7 @@ const navLinks = [
 }
 
 .navbar__logo-name {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-weight: 500;
   font-size: 13px;
   letter-spacing: 0.14em;
@@ -158,7 +160,7 @@ const navLinks = [
 .navbar__btn {
   background: var(--green);
   color: #fff;
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 13px;
   font-weight: 500;
   padding: 8px 20px;
@@ -186,7 +188,9 @@ const navLinks = [
   height: 2px;
   background: #fff;
   border-radius: 2px;
-  transition: transform 0.2s, opacity 0.2s;
+  transition:
+    transform 0.2s,
+    opacity 0.2s;
   display: block;
 }
 

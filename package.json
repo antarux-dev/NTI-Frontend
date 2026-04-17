@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "lint": "eslint . --ext .vue,.ts,.js --max-warnings=20",
+    "lint:fix": "eslint . --ext .vue,.ts,.js --fix && prettier --write .",
+    "type-check": "vue-tsc --noEmit",
+    "vitest": "vitest run",
+    "vitest:watch": "vitest watch"
   },
   "dependencies": {
     "pinia": "^3.0.4",
@@ -14,13 +18,24 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.2.2",
     "@types/node": "^24.12.2",
+    "@typescript-eslint/eslint-plugin": "^8.58.2",
+    "@typescript-eslint/parser": "^8.58.2",
     "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.7.0",
+    "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.9.1",
+    "eslint": "^10.2.0",
+    "eslint-plugin-vue": "^10.8.0",
+    "jsdom": "^29.0.2",
+    "prettier": "^3.8.3",
     "tailwindcss": "^4.2.2",
     "typescript": "~6.0.2",
     "vite": "^8.0.4",
+    "vitest": "^4.1.4",
     "vue-tsc": "^3.2.6"
   }
 }

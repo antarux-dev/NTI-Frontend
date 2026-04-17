@@ -1,0 +1,36 @@
+name: ci
+on:
+  pull_request:
+    branches: [CI_CD_Pipeline_Test]
+  push:
+    branches: [CI_CD_Pipeline_Test]
+
+jobs:
+  quality-checks:
+    name: CI frontend checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      
+      - name: Install packages
+        run: npm ci
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Run type check
+        run: npm run type-check
+
+      - name: Run unit tests
+        run: npm run vitest
+        env:
+          CI: true
+
+            

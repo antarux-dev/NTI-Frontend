@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { RouterLink } from "vue-router";
 
 const footerLinks = [
   {
-    title: 'Programy',
+    title: "Programy",
     links: [
-      { label: 'Program A – Grant', to: '/program-a' },
-      { label: 'Program B – Prax', to: '/program-b' },
-      { label: 'Podmienky', to: '/kontakt' },
-      { label: 'Výzvy', to: '/kontakt' },
+      { label: "Program A - Grant", to: "/program-a" },
+      { label: "Program B - Prax", to: "/program-b" },
+      { label: "Podmienky", to: "/kontakt" },
+      { label: "Výzvy", to: "/kontakt" },
     ],
   },
   {
-    title: 'Pre firmy',
+    title: "Pre firmy",
     links: [
-      { label: 'Zadajte projekt', to: '/kontakt' },
-      { label: 'Stať sa partnerom', to: '/kontakt' },
-      { label: 'Mentori', to: '/o-nti' },
-      { label: 'FAQ', to: '/kontakt' },
+      { label: "Zadajte projekt", to: "/kontakt" },
+      { label: "Stať sa partnerom", to: "/kontakt" },
+      { label: "Mentori", to: "/o-nti" },
+      { label: "FAQ", to: "/kontakt" },
     ],
   },
   {
-    title: 'O NTI',
+    title: "O NTI",
     links: [
-      { label: 'Naša misia', to: '/o-nti' },
-      { label: 'Piliere', to: '/o-nti' },
-      { label: 'Tím', to: '/o-nti' },
-      { label: 'Novinky', to: '/' },
-      { label: 'Kontakt', to: '/kontakt' },
+      { label: "Naša misia", to: "/o-nti" },
+      { label: "Piliere", to: "/o-nti" },
+      { label: "Tím", to: "/o-nti" },
+      { label: "Novinky", to: "/" },
+      { label: "Kontakt", to: "/kontakt" },
     ],
   },
-]
+];
 </script>
 
 <template>
@@ -131,7 +131,7 @@ const footerLinks = [
 }
 
 .footer__logo-name {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-weight: 500;
   font-size: 13px;
   letter-spacing: 0.14em;
