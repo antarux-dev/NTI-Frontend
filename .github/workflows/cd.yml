@@ -1,0 +1,54 @@
+name: cd
+
+on:
+  push:
+    branches: [ CI_CD_Pipeline_Test ]
+
+jobs:
+  deploy:
+    name: frontend deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create docker image
+        run: docker build -t nti-frontend:test_image .
+
+      - name: Save docker image
+        run: docker save nti-frontend:test_image -o frontend.tar
+
+      - name: Perms setup
+        run: chmod 644 frontend.tar
+
+      - name: Copy files to vps
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 167.86.67.94
+          username: deploy
+          port: 6742
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "frontend.tar"
+          target: "/opt/nti/frontend/"
+          overwrite: true
+
+      - name: Run deployment on vps
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 167.86.67.94
+          username: deploy
+          port: 6742
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/nti/frontend
+
+            docker load -i frontend.tar
+            docker stop nti-frontend-test
+            docker rm nti-frontend-test
+
+            docker run -d \
+              --name nti-frontend-test \
+              --restart unless-stopped \
+              -p 3001:80 \
+              nti-frontend:test_image
