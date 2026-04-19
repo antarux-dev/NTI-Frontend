@@ -2,7 +2,7 @@ name: cd
 
 on:
   push:
-    branches: [ CI_CD_Pipeline_Test ]
+    branches: [CI_CD_Pipeline_Test]
 
 jobs:
   deploy:
