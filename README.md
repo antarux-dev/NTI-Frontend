@@ -8,7 +8,7 @@
 
 ## Contributors
 - [Matúš Kovár](https://github.com/theAntarux)
-- [Matúš Gabaš](https://github.com/snickers-c)
+- [Matúš Gabaš](https://github.com/matusgabas)
 - [Emma Kohútová](https://github.com/Emma04Koh)
 - [Juraj Daniš](https://github.com/Jur1n0)
 
