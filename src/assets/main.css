@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --green: #00a88f;
+  --green-d: #008a76;
+  --green-l: #e6f7f5;
+  --green-m: #b3e8e2;
+  --blue: #0027bd;
+  --blue-d: #001f9a;
+  --blue-l: #e8ebfa;
+  --blue-m: #c5ccf0;
+  --gray-90: #1a1a1a;
+  --gray-70: #4a4a4a;
+  --gray-50: #7a7a7a;
+  --gray-30: #c8c8c8;
+  --gray-20: #e8e8e8;
+  --gray-10: #f5f5f5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  color: var(--gray-90);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
