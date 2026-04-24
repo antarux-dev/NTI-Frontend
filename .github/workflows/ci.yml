@@ -1,21 +1,26 @@
 name: ci
 on:
   pull_request:
-    branches: [CI_CD_Pipeline_Test]
   push:
-    branches: [CI_CD_Pipeline_Test]
+
+permissions:
+  contents: read
 
 jobs:
   quality-checks:
-    name: CI frontend checks
+    name: Frontend checks
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: "npm"
@@ -24,10 +29,13 @@ jobs:
       - name: Install packages
         run: npm ci
 
+      - name: NPM security audit
+        run: npm audit --audit-level=critical
+
       - name: Run Lint
         run: npm run lint
 
-      - name: Run type check
+      - name: Run type check 
         run: npm run type-check
 
       - name: Run unit tests
@@ -35,4 +43,5 @@ jobs:
         env:
           CI: true
 
-            
+      - name: Build app
+        run: npm run build
