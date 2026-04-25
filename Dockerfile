@@ -1,7 +1,7 @@
 FROM node:22-alpine AS build_stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --prefer-offline --no-audit --ignore-scripts
 COPY . .
 RUN npm run build
 

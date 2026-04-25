@@ -41,5 +41,10 @@
     "vite": "^8.0.4",
     "vitest": "^4.1.4",
     "vue-tsc": "^3.2.6"
+  },
+  "overrides": {
+    "@tailwindcss/vite": {
+      "vite": "$vite"
   }
+}
 }
