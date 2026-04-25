@@ -23,9 +23,9 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: "npm"
+          cache: 'npm'
           cache-dependency-path: package-lock.json
-      
+
       - name: Install packages
         run: npm ci
 
@@ -35,7 +35,7 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
-      - name: Run type check 
+      - name: Run type check
         run: npm run type-check
 
       - name: Run unit tests

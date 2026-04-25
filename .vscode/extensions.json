@@ -4,6 +4,6 @@
     "formulahendry.auto-close-tag",
     "wix.vscode-import-cost",
     "bradlc.vscode-tailwindcss",
-    "vitest.explorer",
+    "vitest.explorer"
   ]
 }
