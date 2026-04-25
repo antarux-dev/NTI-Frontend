@@ -24,7 +24,7 @@
       "@pages/*": ["./src/pages/*"],
       "@stores/*": ["./src/stores/*"],
       "@router/*": ["./src/router/*"]
-    },
+    }
   },
 
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/vite-env.d.ts"],

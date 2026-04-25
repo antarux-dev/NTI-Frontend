@@ -1,37 +1,37 @@
 // bude sa este dorabat:))
 
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 export interface Stat {
-  val: string
-  label: string
+  val: string;
+  label: string;
 }
 
 export interface Program {
-  id: 'A' | 'B'
-  badge: string
-  title: string
-  desc: string
-  checks: string[]
-  tags: string[]
-  btnLabel: string
-  route: string
+  id: 'A' | 'B';
+  badge: string;
+  title: string;
+  desc: string;
+  checks: string[];
+  tags: string[];
+  btnLabel: string;
+  route: string;
 }
 
 export interface Pillar {
-  name: string
-  desc: string
-  svgPath: string
+  name: string;
+  desc: string;
+  svgPath: string;
 }
 
 export interface Step {
-  title: string
-  desc: string
+  title: string;
+  desc: string;
 }
 
 export interface Partner {
-  name: string
+  name: string;
 }
 
 export const useNtiStore = defineStore('nti', () => {
@@ -40,7 +40,7 @@ export const useNtiStore = defineStore('nti', () => {
     { val: '4×', label: 'Hodnotenie ročne' },
     { val: '3+', label: 'Min. veľkosť tímu' },
     { val: '100%', label: 'Reálne projekty' },
-  ])
+  ]);
 
   const programs = ref<Program[]>([
     {
@@ -73,7 +73,7 @@ export const useNtiStore = defineStore('nti', () => {
       btnLabel: 'Prihlásiť sa do Programu B',
       route: '/program-b',
     },
-  ])
+  ]);
 
   const pillars = ref<Pillar[]>([
     {
@@ -100,18 +100,30 @@ export const useNtiStore = defineStore('nti', () => {
       svgPath:
         'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
     },
-  ])
+  ]);
 
   const steps = ref<Step[]>([
-    { title: 'Registrácia', desc: 'Vytvoríš si účet a vyplníš profil — ako študent, tím alebo firma.' },
-    { title: 'Prihláška', desc: 'Vybereš program, vypracuješ projekt a odošleš prihlášku s prílohami.' },
+    {
+      title: 'Registrácia',
+      desc: 'Vytvoríš si účet a vyplníš profil — ako študent, tím alebo firma.',
+    },
+    {
+      title: 'Prihláška',
+      desc: 'Vybereš program, vypracuješ projekt a odošleš prihlášku s prílohami.',
+    },
     {
       title: 'Hodnotenie',
       desc: 'Komisia posúdi prihlášku, prípadne vyžiada doplnenie, a rozhodne o prijatí.',
     },
-    { title: 'Realizácia', desc: 'Pracuješ na projekte s prideleným mentorom a eviduješ míľniky.' },
-    { title: 'Odovzdanie', desc: 'Výstupy sa archivujú, vyhodnotia KPI a projekt je uzavretý.' },
-  ])
+    {
+      title: 'Realizácia',
+      desc: 'Pracuješ na projekte s prideleným mentorom a eviduješ míľniky.',
+    },
+    {
+      title: 'Odovzdanie',
+      desc: 'Výstupy sa archivujú, vyhodnotia KPI a projekt je uzavretý.',
+    },
+  ]);
 
   const partners = ref<Partner[]>([
     { name: 'UKF Nitra' },
@@ -122,7 +134,7 @@ export const useNtiStore = defineStore('nti', () => {
     { name: 'Slovak IT' },
     { name: 'Tech4Region' },
     { name: 'StartupHub SK' },
-  ])
+  ]);
 
-  return { stats, programs, pillars, steps, partners }
-})
+  return { stats, programs, pillars, steps, partners };
+});

@@ -1,0 +1,62 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Frontend deployment
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Create docker image
+        run: docker build -t nti-frontend:${{ github.sha }} .
+
+      - name: Save docker image
+        run: docker save nti-frontend:${{ github.sha }} -o frontend.tar
+
+      - name: Perms setup
+        run: chmod 644 frontend.tar
+
+      - name: Copy files to vps
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 167.86.67.94
+          username: deploy
+          port: 6742
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: 'frontend.tar'
+          target: '/opt/nti/frontend/'
+          overwrite: true
+
+      - name: Run deployment on vps
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 167.86.67.94
+          username: deploy
+          port: 6742
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/nti/frontend
+
+            docker load -i frontend.tar
+            rm -f frontend.tar
+
+            docker stop nti-frontend-test || true
+            docker rm -f nti-frontend-test || true
+
+            docker run -d \
+              --name nti-frontend-test \
+              --restart unless-stopped \
+              -p 3001:80 \
+              nti-frontend:${{ github.sha }}
+
+            docker image prune -f --filter "until=168h"

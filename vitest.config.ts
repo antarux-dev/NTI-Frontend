@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
-import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
-  plugins: [vue(), tailwindcss()],
+  plugins: [vue()],
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -13,5 +13,11 @@ export default defineConfig({
       '@stores': fileURLToPath(new URL('./src/stores', import.meta.url)),
       '@router': fileURLToPath(new URL('./src/router', import.meta.url)),
     },
+  },
+
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    include: ['src/**/*.{test,spec}.{js,ts,jsx,tsx,vue}'],
   },
 });
