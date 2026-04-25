@@ -1,0 +1,49 @@
+# GLOBAL RULES
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.env
+Disallow: /*.config
+Disallow: /build/
+Disallow: /dist/
+Disallow: /node_modules/
+
+# Sitemap for "good" crawlers
+Sitemap: https://antarux.dev/sitemap.xml
+
+# SEARCH ENGINES
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Slurp
+User-agent: DuckDuckBot
+User-agent: Baiduspider
+Allow: /
+
+# AI TRAINING CRAWLERS BLOCKS
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: Google-Extended
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: meta-externalagent
+User-agent: Applebot-Extended
+Disallow: /
+
+# AI SEARCH / RETRIEVAL
+# User-agent: OAI-SearchBot
+# User-agent: Perplexity-User
+# Allow: /
+
+# SECURITY / BAD BOTS
+User-agent: Amazonbot
+Disallow: /
+
+# Rate limiting hint
+Crawl-delay: 1

@@ -1,0 +1,8 @@
+# Mission
+NTI supports tech talent retention in Nitra region through incubation programs, mentoring and industry collaboration.
+
+# Programs
+- Program A: Grant incubation for student startups
+- Program B: Live practice with real company projects
+
+# How to participate: Visit https://antarux.dev/program-a or /program-b
