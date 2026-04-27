@@ -14,11 +14,13 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      security:
+      security-updates:
+        applies-to: security-updates
         patterns:
           - "*"
         update-types:
-          - "security"
+          - "minor"
+          - "patch"
     allow:
       - dependency-type: "production"
       - dependency-type: "development"
