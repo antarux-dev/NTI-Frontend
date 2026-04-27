@@ -27,7 +27,7 @@
     "@emnapi/runtime": "^1.10.0",
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.2.2",
-    "@types/node": "^24.12.2",
+    "@types/node": "^25.6.0",
     "@typescript-eslint/eslint-plugin": "^8.58.2",
     "@typescript-eslint/parser": "^8.58.2",
     "@vitejs/plugin-vue": "^6.0.5",
