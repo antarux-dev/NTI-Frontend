@@ -5,7 +5,7 @@ import prettierConfig from '@vue/eslint-config-prettier';
 import vueParser from 'vue-eslint-parser';
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules', '*.config.js'] },
+  { ignores: ['dist', 'node_modules', '*.config.js', '*.config.ts'] },
 
   js.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
@@ -35,8 +35,15 @@ export default tseslint.config(
     rules: {
       'vue/multi-word-component-names': 'off',
       'vue/no-v-html': 'warn',
+      'vue/no-unused-vars': 'error',
+      'vue/require-default-prop': 'off',
+      
       '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-debugger': 'error',
     },
   }
 );

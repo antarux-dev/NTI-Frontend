@@ -1,7 +1,16 @@
 * text=auto eol=lf
 
+# Syntax based files
 *.js text eol=lf
 *.ts text eol=lf
 *.vue text eol=lf
 *.json text eol=lf
 *.md text eol=lf
+
+# Image based asset files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
