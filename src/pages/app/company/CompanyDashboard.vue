@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
-import { Briefcase, Users, ChevronRight, Plus, FileText } from 'lucide-vue-next';
+  import { RouterLink } from 'vue-router';
+  import { useAuthStore } from '@/stores/auth';
+  import { Briefcase, Users, ChevronRight, Plus, FileText } from 'lucide-vue-next';
 
-const authStore = useAuthStore();
+  const authStore = useAuthStore();
 
-const stats = [
-  { label: 'Projekty',  value: 0, icon: Briefcase },
-  { label: 'Aktívne',   value: 0, icon: Briefcase },
-  { label: 'Tímy',      value: 0, icon: Users },
-  { label: 'Prihlášky', value: 0, icon: FileText },
-];
+  const stats = [
+    { label: 'Projekty', value: 0, icon: Briefcase },
+    { label: 'Aktívne', value: 0, icon: Briefcase },
+    { label: 'Tímy', value: 0, icon: Users },
+    { label: 'Prihlášky', value: 0, icon: FileText },
+  ];
 
-const quickActions = [
-  {
-    label: 'Nový projekt',
-    desc: 'Zadať technickú špecifikáciu',
-    to: { name: 'company-new-project' },
-    icon: Plus,
-  },
-  {
-    label: 'Profil firmy',
-    desc: 'Upraviť údaje o firme',
-    to: { name: 'company-profile' },
-    icon: Briefcase,
-  },
-  {
-    label: 'Členovia tímu',
-    desc: 'Spravovať firemných používateľov',
-    to: { name: 'company-members' },
-    icon: Users,
-  },
-];
+  const quickActions = [
+    {
+      label: 'Nový projekt',
+      desc: 'Zadať technickú špecifikáciu',
+      to: { name: 'company-new-project' },
+      icon: Plus,
+    },
+    {
+      label: 'Profil firmy',
+      desc: 'Upraviť údaje o firme',
+      to: { name: 'company-profile' },
+      icon: Briefcase,
+    },
+    {
+      label: 'Členovia tímu',
+      desc: 'Spravovať firemných používateľov',
+      to: { name: 'company-members' },
+      icon: Users,
+    },
+  ];
 </script>
 
 <template>
@@ -46,11 +46,7 @@ const quickActions = [
 
     <!-- Stats -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-      <div
-        v-for="stat in stats"
-        :key="stat.label"
-        class="card-nti p-5"
-      >
+      <div v-for="stat in stats" :key="stat.label" class="card-nti p-5">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs text-nti-gray font-mono">{{ stat.label }}</span>
           <component :is="stat.icon" class="size-4 text-nti-green" />
@@ -85,16 +81,22 @@ const quickActions = [
             :to="action.to"
             class="card-nti group flex items-center gap-4 p-4 block"
           >
-            <div class="size-9 rounded-lg bg-nti-green-dim border border-nti-green/20 flex items-center justify-center shrink-0">
+            <div
+              class="size-9 rounded-lg bg-nti-green-dim border border-nti-green/20 flex items-center justify-center shrink-0"
+            >
               <component :is="action.icon" class="size-4 text-nti-green" />
             </div>
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-nti-white group-hover:text-nti-green transition-colors">
+              <p
+                class="text-sm font-medium text-nti-white group-hover:text-nti-green transition-colors"
+              >
                 {{ action.label }}
               </p>
               <p class="text-xs text-nti-muted">{{ action.desc }}</p>
             </div>
-            <ChevronRight class="size-4 text-nti-muted group-hover:text-nti-green transition-colors shrink-0" />
+            <ChevronRight
+              class="size-4 text-nti-muted group-hover:text-nti-green transition-colors shrink-0"
+            />
           </RouterLink>
         </div>
       </div>

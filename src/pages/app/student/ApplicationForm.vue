@@ -1,79 +1,76 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRouter, useRoute, RouterLink } from 'vue-router';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { z } from 'zod';
-import { ArrowLeft, CheckCircle, Loader2, Upload } from 'lucide-vue-next';
-import { useApplicationStore } from '@/stores/applications';
-import ApplicationService from '@/services/applications.service';
-import ProgramService from '@/services/programs.service';
-import NtiAlert from '@/components/ui/NtiAlert.vue';
-import type { Call } from '@/types';
+  import { ref, onMounted } from 'vue';
+  import { useRouter, useRoute, RouterLink } from 'vue-router';
+  import { useForm } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
+  import { ArrowLeft, CheckCircle, Loader2, Upload } from 'lucide-vue-next';
+  import { useApplicationStore } from '@/stores/applications';
+  import ApplicationService from '@/services/applications.service';
+  import ProgramService from '@/services/programs.service';
+  import NtiAlert from '@/components/ui/NtiAlert.vue';
+  import type { Call } from '@/types';
 
-const router = useRouter();
-const route = useRoute();
-const appStore = useApplicationStore();
+  const router = useRouter();
+  const route = useRoute();
+  const appStore = useApplicationStore();
 
-const callId = Number(route.query['callId']);
-const call = ref<Call | null>(null);
-const submittedAppId = ref<number | null>(null);
-const uploadingDoc = ref(false);
-const docFile = ref<File | null>(null);
-const docFileInput = ref<HTMLInputElement | null>(null);
+  const callId = Number(route.query['callId']);
+  const call = ref<Call | null>(null);
+  const submittedAppId = ref<number | null>(null);
+  const uploadingDoc = ref(false);
+  const docFile = ref<File | null>(null);
+  const docFileInput = ref<HTMLInputElement | null>(null);
 
-onMounted(async () => {
-  if (callId) {
-    call.value = await ProgramService.getCall(callId);
-  }
-});
-
-const schema = z.object({
-  motivationLetter: z
-    .string()
-    .min(50, 'Motivačný list musí mať aspoň 50 znakov')
-    .max(3000, 'Motivačný list nesmie presiahnuť 3000 znakov'),
-});
-
-const { handleSubmit, errors, defineField, isSubmitting, values } = useForm({
-  validationSchema: toTypedSchema(schema),
-});
-
-const [motivationLetter, motivationLetterAttrs] = defineField('motivationLetter');
-const charCount = () => (values.motivationLetter?.length ?? 0);
-
-const onSubmit = handleSubmit(async (vals) => {
-  const created = await appStore.createApplication({
-    callId,
-    motivationLetter: vals.motivationLetter,
+  onMounted(async () => {
+    if (callId) {
+      call.value = await ProgramService.getCall(callId);
+    }
   });
-  await appStore.submitApplication(created.id);
-  submittedAppId.value = created.id;
-});
 
-function handleDocChange(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  docFile.value = input.files?.[0] ?? null;
-}
+  const schema = z.object({
+    motivationLetter: z
+      .string()
+      .min(50, 'Motivačný list musí mať aspoň 50 znakov')
+      .max(3000, 'Motivačný list nesmie presiahnuť 3000 znakov'),
+  });
 
-async function uploadDocument(): Promise<void> {
-  if (!submittedAppId.value || !docFile.value) return;
-  uploadingDoc.value = true;
-  try {
-    await ApplicationService.uploadDocument(submittedAppId.value, docFile.value, 'priloha');
-    docFile.value = null;
-  } finally {
-    uploadingDoc.value = false;
+  const { handleSubmit, errors, defineField, isSubmitting, values } = useForm({
+    validationSchema: toTypedSchema(schema),
+  });
+
+  const [motivationLetter, motivationLetterAttrs] = defineField('motivationLetter');
+  const charCount = () => values.motivationLetter?.length ?? 0;
+
+  const onSubmit = handleSubmit(async (vals) => {
+    const created = await appStore.createApplication({
+      callId,
+      motivationLetter: vals.motivationLetter,
+    });
+    await appStore.submitApplication(created.id);
+    submittedAppId.value = created.id;
+  });
+
+  function handleDocChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    docFile.value = input.files?.[0] ?? null;
   }
-}
+
+  async function uploadDocument(): Promise<void> {
+    if (!submittedAppId.value || !docFile.value) return;
+    uploadingDoc.value = true;
+    try {
+      await ApplicationService.uploadDocument(submittedAppId.value, docFile.value, 'priloha');
+      docFile.value = null;
+    } finally {
+      uploadingDoc.value = false;
+    }
+  }
 </script>
 
 <template>
   <div class="max-w-2xl">
-    <RouterLink
-      :to="{ name: 'student-applications' }"
-      class="btn-ghost text-sm mb-6 inline-flex"
-    >
+    <RouterLink :to="{ name: 'student-applications' }" class="btn-ghost text-sm mb-6 inline-flex">
       <ArrowLeft class="size-4" />
       Späť
     </RouterLink>
@@ -125,8 +122,8 @@ async function uploadDocument(): Promise<void> {
           {{ call?.title ?? 'Podať prihlášku' }}
         </h1>
         <p v-if="call" class="text-sm text-nti-muted font-mono mt-1">
-          Program {{ call.programId === 1 ? 'A' : 'B' }} ·
-          Deadline: {{ new Intl.DateTimeFormat('sk-SK').format(new Date(call.deadline)) }}
+          Program {{ call.programId === 1 ? 'A' : 'B' }} · Deadline:
+          {{ new Intl.DateTimeFormat('sk-SK').format(new Date(call.deadline)) }}
         </p>
       </div>
 
@@ -153,9 +150,7 @@ async function uploadDocument(): Promise<void> {
             <p v-if="errors.motivationLetter" class="text-xs text-red-400">
               {{ errors.motivationLetter }}
             </p>
-            <span class="text-xs text-nti-muted ml-auto">
-              {{ charCount() }} / 3000
-            </span>
+            <span class="text-xs text-nti-muted ml-auto"> {{ charCount() }} / 3000 </span>
           </div>
         </div>
 
@@ -163,11 +158,7 @@ async function uploadDocument(): Promise<void> {
           <p class="text-xs text-nti-muted max-w-xs">
             Odoslaním súhlasíte so spracovaním prihlášky komisiou NTI.
           </p>
-          <button
-            type="submit"
-            class="btn-primary"
-            :disabled="isSubmitting"
-          >
+          <button type="submit" class="btn-primary" :disabled="isSubmitting">
             <Loader2 v-if="isSubmitting" class="size-4 animate-spin" />
             <template v-else>Odoslať prihlášku</template>
           </button>

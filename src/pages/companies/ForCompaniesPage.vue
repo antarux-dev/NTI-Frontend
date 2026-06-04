@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { ArrowRight, Building2, ChevronRight } from 'lucide-vue-next';
+  import { RouterLink } from 'vue-router';
+  import { ArrowRight, Building2, ChevronRight } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -26,16 +26,30 @@ import { ArrowRight, Building2, ChevronRight } from 'lucide-vue-next';
         <div class="grid sm:grid-cols-3 gap-5">
           <RouterLink
             v-for="link in [
-              { label: 'Ako fungujú projekty', to: '/pre-firmy/ako-funguju-projekty', desc: 'Kompletný prehľad procesu od zadania po odovzdanie.' },
-              { label: 'Partneri NTI', to: '/pre-firmy/partneri', desc: 'Zoznam partnerských firiem a organizácií.' },
-              { label: 'Mentori', to: '/pre-firmy/mentori', desc: 'Tím skúsených mentorov z praxe.' },
+              {
+                label: 'Ako fungujú projekty',
+                to: '/pre-firmy/ako-funguju-projekty',
+                desc: 'Kompletný prehľad procesu od zadania po odovzdanie.',
+              },
+              {
+                label: 'Partneri NTI',
+                to: '/pre-firmy/partneri',
+                desc: 'Zoznam partnerských firiem a organizácií.',
+              },
+              {
+                label: 'Mentori',
+                to: '/pre-firmy/mentori',
+                desc: 'Tím skúsených mentorov z praxe.',
+              },
             ]"
             :key="link.label"
             :to="link.to"
             class="card-nti group p-6 block"
           >
             <Building2 class="size-6 text-nti-green mb-4" />
-            <h3 class="font-display font-semibold text-nti-white mb-2 group-hover:text-nti-green transition-colors">
+            <h3
+              class="font-display font-semibold text-nti-white mb-2 group-hover:text-nti-green transition-colors"
+            >
               {{ link.label }}
             </h3>
             <p class="text-sm text-nti-gray mb-4">{{ link.desc }}</p>

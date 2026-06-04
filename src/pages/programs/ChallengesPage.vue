@@ -1,69 +1,73 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
-import { Calendar, Clock, ArrowRight, Loader2 } from 'lucide-vue-next';
-import apiClient from '@/utils/http';
-import type { Call } from '@/types';
+  import { ref, onMounted } from 'vue';
+  import { RouterLink } from 'vue-router';
+  import { Calendar, Clock, ArrowRight, Loader2 } from 'lucide-vue-next';
+  import apiClient from '@/utils/http';
+  import type { Call } from '@/types';
 
-const calls = ref<Call[]>([]);
-const loading = ref(true);
-const error = ref<string | null>(null);
+  const calls = ref<Call[]>([]);
+  const loading = ref(true);
+  const error = ref<string | null>(null);
 
-// Placeholder data until backend is ready
-const placeholderCalls: Call[] = [
-  {
-    id: 1,
-    programId: 1,
-    title: 'Výzva 2025/I — Program A',
-    description: 'Otvorená výzva pre inovatívne projekty v oblasti webových aplikácií, IoT a hier.',
-    status: 'open',
-    deadline: '2025-06-30',
-    evaluationCriteria: ['Inovácia', 'Realizovateľnosť', 'Dopad', 'Tím'],
-  },
-  {
-    id: 2,
-    programId: 2,
-    title: 'Výzva 2025/B — Firemné projekty',
-    description: 'Program B — zbierka firemných zadaní pre študentské tímy na akademický rok 2025/26.',
-    status: 'open',
-    deadline: '2025-09-15',
-    evaluationCriteria: ['Technická schopnosť', 'Motivácia', 'Návrh riešenia'],
-  },
-];
+  // Placeholder data until backend is ready
+  const placeholderCalls: Call[] = [
+    {
+      id: 1,
+      programId: 1,
+      title: 'Výzva 2025/I — Program A',
+      description:
+        'Otvorená výzva pre inovatívne projekty v oblasti webových aplikácií, IoT a hier.',
+      status: 'open',
+      deadline: '2025-06-30',
+      evaluationCriteria: ['Inovácia', 'Realizovateľnosť', 'Dopad', 'Tím'],
+    },
+    {
+      id: 2,
+      programId: 2,
+      title: 'Výzva 2025/B — Firemné projekty',
+      description:
+        'Program B — zbierka firemných zadaní pre študentské tímy na akademický rok 2025/26.',
+      status: 'open',
+      deadline: '2025-09-15',
+      evaluationCriteria: ['Technická schopnosť', 'Motivácia', 'Návrh riešenia'],
+    },
+  ];
 
-onMounted(async () => {
-  try {
-    const { data } = await apiClient.get<{ data: Call[] }>('/calls');
-    calls.value = data.data;
-  } catch {
-    // Backend not ready yet — use placeholder
-    calls.value = placeholderCalls;
-  } finally {
-    loading.value = false;
+  onMounted(async () => {
+    try {
+      const { data } = await apiClient.get<{ data: Call[] }>('/calls');
+      calls.value = data.data;
+    } catch {
+      // Backend not ready yet — use placeholder
+      calls.value = placeholderCalls;
+    } finally {
+      loading.value = false;
+    }
+  });
+
+  function formatDate(dateStr: string): string {
+    return new Intl.DateTimeFormat('sk-SK', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(dateStr));
   }
-});
 
-function formatDate(dateStr: string): string {
-  return new Intl.DateTimeFormat('sk-SK', { day: 'numeric', month: 'long', year: 'numeric' }).format(
-    new Date(dateStr),
-  );
-}
+  const statusLabels: Record<string, string> = {
+    open: 'Otvorená',
+    closed: 'Uzavretá',
+    evaluating: 'Hodnotenie',
+    finished: 'Ukončená',
+    draft: 'Draft',
+  };
 
-const statusLabels: Record<string, string> = {
-  open: 'Otvorená',
-  closed: 'Uzavretá',
-  evaluating: 'Hodnotenie',
-  finished: 'Ukončená',
-  draft: 'Draft',
-};
-
-const statusClasses: Record<string, string> = {
-  open: 'badge-green',
-  closed: 'badge-gray',
-  evaluating: 'badge-gray',
-  finished: 'badge-gray',
-  draft: 'badge-gray',
-};
+  const statusClasses: Record<string, string> = {
+    open: 'badge-green',
+    closed: 'badge-gray',
+    evaluating: 'badge-gray',
+    finished: 'badge-gray',
+    draft: 'badge-gray',
+  };
 </script>
 
 <template>
@@ -85,11 +89,7 @@ const statusClasses: Record<string, string> = {
         </div>
 
         <div v-else class="space-y-5">
-          <div
-            v-for="call in calls"
-            :key="call.id"
-            class="card-nti p-7"
-          >
+          <div v-for="call in calls" :key="call.id" class="card-nti p-7">
             <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
               <div>
                 <div class="flex items-center gap-3 mb-2">
@@ -104,7 +104,10 @@ const statusClasses: Record<string, string> = {
               </div>
               <div class="flex items-center gap-2 text-sm text-nti-gray shrink-0">
                 <Clock class="size-4 text-nti-green" />
-                <span>Deadline: <strong class="text-nti-white">{{ formatDate(call.deadline) }}</strong></span>
+                <span
+                  >Deadline:
+                  <strong class="text-nti-white">{{ formatDate(call.deadline) }}</strong></span
+                >
               </div>
             </div>
 

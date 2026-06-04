@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { User } from 'lucide-vue-next';
-import type { Mentor } from '@/types';
+  import { User } from 'lucide-vue-next';
+  import type { Mentor } from '@/types';
 
-const mentors: Mentor[] = [
-  {
-    id: 1,
-    firstName: 'NTI',
-    lastName: 'Mentor',
-    title: 'Senior Developer',
-    bio: 'Skúsený odborník z praxe priraďovaný k projektom v rámci NTI mentoring programu.',
-    expertise: ['Vývoj softvéru', 'Projektový manažment', 'Architektonický dizajn'],
-  },
-];
+  const mentors: Mentor[] = [
+    {
+      id: 1,
+      firstName: 'NTI',
+      lastName: 'Mentor',
+      title: 'Senior Developer',
+      bio: 'Skúsený odborník z praxe priraďovaný k projektom v rámci NTI mentoring programu.',
+      expertise: ['Vývoj softvéru', 'Projektový manažment', 'Architektonický dizajn'],
+    },
+  ];
 </script>
 
 <template>
@@ -29,12 +29,10 @@ const mentors: Mentor[] = [
     <section class="py-20 bg-nti-black">
       <div class="container-nti">
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div
-            v-for="mentor in mentors"
-            :key="mentor.id"
-            class="card-nti p-6"
-          >
-            <div class="size-14 rounded-2xl bg-nti-surface border border-nti-border flex items-center justify-center mb-4">
+          <div v-for="mentor in mentors" :key="mentor.id" class="card-nti p-6">
+            <div
+              class="size-14 rounded-2xl bg-nti-surface border border-nti-border flex items-center justify-center mb-4"
+            >
               <User class="size-7 text-nti-gray" />
             </div>
             <h3 class="font-display font-semibold text-nti-white mb-0.5">
@@ -43,11 +41,7 @@ const mentors: Mentor[] = [
             <p class="text-xs text-nti-green font-mono mb-3">{{ mentor.title }}</p>
             <p class="text-sm text-nti-gray leading-relaxed mb-4">{{ mentor.bio }}</p>
             <div class="flex flex-wrap gap-2">
-              <span
-                v-for="skill in mentor.expertise"
-                :key="skill"
-                class="badge-gray"
-              >
+              <span v-for="skill in mentor.expertise" :key="skill" class="badge-gray">
                 {{ skill }}
               </span>
             </div>

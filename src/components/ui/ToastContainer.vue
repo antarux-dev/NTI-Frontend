@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { useToast } from '@/composables/useToast';
-import { CheckCircle, AlertCircle, Info, AlertTriangle, X } from 'lucide-vue-next';
+  import { useToast } from '@/composables/useToast';
+  import { CheckCircle, AlertCircle, Info, AlertTriangle, X } from 'lucide-vue-next';
 
-const { toasts, remove } = useToast();
+  const { toasts, remove } = useToast();
 
-const icons = {
-  success: CheckCircle,
-  error: AlertCircle,
-  info: Info,
-  warning: AlertTriangle,
-} as const;
+  const icons = {
+    success: CheckCircle,
+    error: AlertCircle,
+    info: Info,
+    warning: AlertTriangle,
+  } as const;
 
-const styles = {
-  success: 'border-nti-green/20 bg-nti-green-dim text-nti-green-light',
-  error: 'border-red-500/20 bg-red-500/10 text-red-300',
-  info: 'border-blue-500/20 bg-blue-500/10 text-blue-300',
-  warning: 'border-yellow-500/20 bg-yellow-500/10 text-yellow-300',
-} as const;
+  const styles = {
+    success: 'border-nti-green/20 bg-nti-green-dim text-nti-green-light',
+    error: 'border-red-500/20 bg-red-500/10 text-red-300',
+    info: 'border-blue-500/20 bg-blue-500/10 text-blue-300',
+    warning: 'border-yellow-500/20 bg-yellow-500/10 text-yellow-300',
+  } as const;
 </script>
 
 <template>
@@ -49,18 +49,18 @@ const styles = {
 </template>
 
 <style scoped>
-.toast-enter-active {
-  transition: all 0.25s ease;
-}
-.toast-leave-active {
-  transition: all 0.2s ease;
-}
-.toast-enter-from {
-  opacity: 0;
-  transform: translateX(100%);
-}
-.toast-leave-to {
-  opacity: 0;
-  transform: translateX(100%);
-}
+  .toast-enter-active {
+    transition: all 0.25s ease;
+  }
+  .toast-leave-active {
+    transition: all 0.2s ease;
+  }
+  .toast-enter-from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  .toast-leave-to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
 </style>

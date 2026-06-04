@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
-import { RouterLink } from 'vue-router';
-import { FileText, ArrowRight, Loader2, Plus } from 'lucide-vue-next';
-import { useApplicationStore } from '@/stores/applications';
-import { usePagination } from '@/composables/usePagination';
-import NtiStatusBadge from '@/components/ui/NtiStatusBadge.vue';
-import NtiEmptyState from '@/components/ui/NtiEmptyState.vue';
-import type { ApplicationStatus } from '@/types';
+  import { onMounted, ref, watch } from 'vue';
+  import { RouterLink } from 'vue-router';
+  import { FileText, ArrowRight, Loader2, Plus } from 'lucide-vue-next';
+  import { useApplicationStore } from '@/stores/applications';
+  import { usePagination } from '@/composables/usePagination';
+  import NtiStatusBadge from '@/components/ui/NtiStatusBadge.vue';
+  import NtiEmptyState from '@/components/ui/NtiEmptyState.vue';
+  import type { ApplicationStatus } from '@/types';
 
-const appStore = useApplicationStore();
-const pagination = usePagination();
+  const appStore = useApplicationStore();
+  const pagination = usePagination();
 
-const statusFilter = ref<ApplicationStatus | ''>('');
+  const statusFilter = ref<ApplicationStatus | ''>('');
 
-const statusOptions: { value: ApplicationStatus | ''; label: string }[] = [
-  { value: '', label: 'Všetky' },
-  { value: 'draft', label: 'Rozpracované' },
-  { value: 'submitted', label: 'Odoslané' },
-  { value: 'under_review', label: 'V hodnotení' },
-  { value: 'revision_requested', label: 'Doplnenie' },
-  { value: 'approved', label: 'Schválené' },
-  { value: 'rejected', label: 'Zamietnuté' },
-  { value: 'active', label: 'Aktívne' },
-  { value: 'completed', label: 'Ukončené' },
-];
+  const statusOptions: { value: ApplicationStatus | ''; label: string }[] = [
+    { value: '', label: 'Všetky' },
+    { value: 'draft', label: 'Rozpracované' },
+    { value: 'submitted', label: 'Odoslané' },
+    { value: 'under_review', label: 'V hodnotení' },
+    { value: 'revision_requested', label: 'Doplnenie' },
+    { value: 'approved', label: 'Schválené' },
+    { value: 'rejected', label: 'Zamietnuté' },
+    { value: 'active', label: 'Aktívne' },
+    { value: 'completed', label: 'Ukončené' },
+  ];
 
-async function load(): Promise<void> {
-  await appStore.fetchApplications(pagination.currentPage.value);
-}
+  async function load(): Promise<void> {
+    await appStore.fetchApplications(pagination.currentPage.value);
+  }
 
-onMounted(load);
-watch([pagination.currentPage, statusFilter], load);
+  onMounted(load);
+  watch([pagination.currentPage, statusFilter], load);
 
-function formatDate(dateStr: string): string {
-  return new Intl.DateTimeFormat('sk-SK', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date(dateStr));
-}
+  function formatDate(dateStr: string): string {
+    return new Intl.DateTimeFormat('sk-SK', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(dateStr));
+  }
 </script>
 
 <template>
@@ -102,21 +102,23 @@ function formatDate(dateStr: string): string {
         class="card-nti group flex items-center justify-between p-5 block"
       >
         <div class="flex items-center gap-4 min-w-0 flex-1">
-          <div class="size-10 rounded-xl bg-nti-surface border border-nti-border flex items-center justify-center shrink-0">
+          <div
+            class="size-10 rounded-xl bg-nti-surface border border-nti-border flex items-center justify-center shrink-0"
+          >
             <FileText class="size-5 text-nti-gray" />
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-3 mb-0.5">
-              <p class="text-sm font-semibold text-nti-white truncate group-hover:text-nti-green transition-colors">
+              <p
+                class="text-sm font-semibold text-nti-white truncate group-hover:text-nti-green transition-colors"
+              >
                 {{ app.callTitle }}
               </p>
               <span class="font-mono text-xs text-nti-muted shrink-0">
                 Program {{ app.programType }}
               </span>
             </div>
-            <p class="text-xs text-nti-muted">
-              Posledná zmena: {{ formatDate(app.updatedAt) }}
-            </p>
+            <p class="text-xs text-nti-muted">Posledná zmena: {{ formatDate(app.updatedAt) }}</p>
           </div>
         </div>
         <div class="flex items-center gap-3 shrink-0 ml-4">
@@ -127,10 +129,7 @@ function formatDate(dateStr: string): string {
     </div>
 
     <!-- Pagination -->
-    <div
-      v-if="pagination.lastPage.value > 1"
-      class="flex items-center justify-center gap-2 mt-8"
-    >
+    <div v-if="pagination.lastPage.value > 1" class="flex items-center justify-center gap-2 mt-8">
       <button
         class="btn-outline text-sm px-3 py-1.5"
         :disabled="!pagination.hasPrevPage.value"

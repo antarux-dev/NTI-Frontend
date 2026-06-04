@@ -35,17 +35,11 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true;
     error.value = null;
     try {
-      const { data } = await apiClient.post<{ token: string; user: User }>(
-        '/auth/login',
-        payload,
-      );
+      const { data } = await apiClient.post<{ token: string; user: User }>('/auth/login', payload);
       setToken(data.token);
       user.value = data.user;
     } catch (err: unknown) {
-      const msg =
-        err instanceof Error
-          ? err.message
-          : 'Prihlásenie zlyhalo. Skúste to znova.';
+      const msg = err instanceof Error ? err.message : 'Prihlásenie zlyhalo. Skúste to znova.';
       error.value = msg;
       throw err;
     } finally {
@@ -59,8 +53,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       await apiClient.post('/auth/register/student', payload);
     } catch (err: unknown) {
-      const msg =
-        err instanceof Error ? err.message : 'Registrácia zlyhala. Skúste to znova.';
+      const msg = err instanceof Error ? err.message : 'Registrácia zlyhala. Skúste to znova.';
       error.value = msg;
       throw err;
     } finally {
@@ -74,8 +67,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       await apiClient.post('/auth/register/company', payload);
     } catch (err: unknown) {
-      const msg =
-        err instanceof Error ? err.message : 'Registrácia zlyhala. Skúste to znova.';
+      const msg = err instanceof Error ? err.message : 'Registrácia zlyhala. Skúste to znova.';
       error.value = msg;
       throw err;
     } finally {
@@ -89,8 +81,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       await apiClient.post('/auth/register/member', payload);
     } catch (err: unknown) {
-      const msg =
-        err instanceof Error ? err.message : 'Registrácia zlyhala. Skúste to znova.';
+      const msg = err instanceof Error ? err.message : 'Registrácia zlyhala. Skúste to znova.';
       error.value = msg;
       throw err;
     } finally {

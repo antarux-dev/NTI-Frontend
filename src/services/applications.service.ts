@@ -1,9 +1,5 @@
 import apiClient from '../utils/http';
-import type {
-  ApiResponse,
-  PaginatedResponse,
-  ApplicationStatus,
-} from '../types';
+import type { ApiResponse, PaginatedResponse, ApplicationStatus } from '../types';
 
 export interface Application {
   id: number;
@@ -48,8 +44,13 @@ export interface CreateApplicationPayload {
 }
 
 const ApplicationService = {
-  async list(params?: { status?: ApplicationStatus; page?: number }): Promise<PaginatedResponse<Application>> {
-    const { data } = await apiClient.get<PaginatedResponse<Application>>('/applications', { params });
+  async list(params?: {
+    status?: ApplicationStatus;
+    page?: number;
+  }): Promise<PaginatedResponse<Application>> {
+    const { data } = await apiClient.get<PaginatedResponse<Application>>('/applications', {
+      params,
+    });
     return data;
   },
 
@@ -71,7 +72,7 @@ const ApplicationService = {
   async saveDraft(id: number, payload: Partial<CreateApplicationPayload>): Promise<Application> {
     const { data } = await apiClient.patch<ApiResponse<Application>>(
       `/applications/${id}`,
-      payload,
+      payload
     );
     return data.data;
   },
@@ -83,7 +84,7 @@ const ApplicationService = {
     const { data } = await apiClient.post<ApiResponse<ApplicationDocument>>(
       `/applications/${id}/documents`,
       form,
-      { headers: { 'Content-Type': 'multipart/form-data' } },
+      { headers: { 'Content-Type': 'multipart/form-data' } }
     );
     return data.data;
   },

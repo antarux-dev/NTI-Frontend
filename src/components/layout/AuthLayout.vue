@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+  import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
@@ -22,11 +22,6 @@ import { RouterLink, RouterView } from 'vue-router';
     </div>
 
     <!-- Back link -->
-    <RouterLink
-      to="/"
-      class="btn-ghost mt-8 text-sm"
-    >
-      ← Späť na hlavnú stránku
-    </RouterLink>
+    <RouterLink to="/" class="btn-ghost mt-8 text-sm"> ← Späť na hlavnú stránku </RouterLink>
   </div>
 </template>

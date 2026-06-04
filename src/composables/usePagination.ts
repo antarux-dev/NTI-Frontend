@@ -23,7 +23,12 @@ export function usePagination(initialPage = 1) {
     }
   }
 
-  function setMeta(meta: { currentPage: number; lastPage: number; perPage: number; total: number }): void {
+  function setMeta(meta: {
+    currentPage: number;
+    lastPage: number;
+    perPage: number;
+    total: number;
+  }): void {
     currentPage.value = meta.currentPage;
     lastPage.value = meta.lastPage;
     perPage.value = meta.perPage;

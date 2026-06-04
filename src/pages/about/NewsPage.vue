@@ -1,28 +1,30 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { Loader2, Calendar, ArrowRight } from 'lucide-vue-next';
-import apiClient from '@/utils/http';
-import type { NewsItem } from '@/types';
+  import { ref, onMounted } from 'vue';
+  import { Loader2, Calendar, ArrowRight } from 'lucide-vue-next';
+  import apiClient from '@/utils/http';
+  import type { NewsItem } from '@/types';
 
-const news = ref<NewsItem[]>([]);
-const loading = ref(true);
+  const news = ref<NewsItem[]>([]);
+  const loading = ref(true);
 
-onMounted(async () => {
-  try {
-    const { data } = await apiClient.get<{ data: NewsItem[] }>('/news');
-    news.value = data.data;
-  } catch {
-    // Backend not ready yet
-  } finally {
-    loading.value = false;
+  onMounted(async () => {
+    try {
+      const { data } = await apiClient.get<{ data: NewsItem[] }>('/news');
+      news.value = data.data;
+    } catch {
+      // Backend not ready yet
+    } finally {
+      loading.value = false;
+    }
+  });
+
+  function formatDate(dateStr: string): string {
+    return new Intl.DateTimeFormat('sk-SK', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(dateStr));
   }
-});
-
-function formatDate(dateStr: string): string {
-  return new Intl.DateTimeFormat('sk-SK', { day: 'numeric', month: 'long', year: 'numeric' }).format(
-    new Date(dateStr),
-  );
-}
 </script>
 
 <template>
@@ -50,15 +52,8 @@ function formatDate(dateStr: string): string {
         </div>
 
         <div v-else class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <article
-            v-for="item in news"
-            :key="item.id"
-            class="card-nti overflow-hidden group"
-          >
-            <div
-              v-if="item.imageUrl"
-              class="h-48 bg-nti-surface overflow-hidden"
-            >
+          <article v-for="item in news" :key="item.id" class="card-nti overflow-hidden group">
+            <div v-if="item.imageUrl" class="h-48 bg-nti-surface overflow-hidden">
               <img
                 :src="item.imageUrl"
                 :alt="item.title"
@@ -70,7 +65,9 @@ function formatDate(dateStr: string): string {
                 <Calendar class="size-3" />
                 {{ formatDate(item.publishedAt) }}
               </div>
-              <h2 class="font-display font-semibold text-nti-white mb-2 group-hover:text-nti-green transition-colors">
+              <h2
+                class="font-display font-semibold text-nti-white mb-2 group-hover:text-nti-green transition-colors"
+              >
                 {{ item.title }}
               </h2>
               <p class="text-sm text-nti-gray leading-relaxed mb-4">{{ item.excerpt }}</p>

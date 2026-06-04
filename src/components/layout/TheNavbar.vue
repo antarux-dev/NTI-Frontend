@@ -1,122 +1,119 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { RouterLink } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
-import { Menu, X, ChevronDown, LogIn } from 'lucide-vue-next';
-import type { NavItem } from '@/types';
+  import { ref, computed, onMounted, onUnmounted } from 'vue';
+  import { RouterLink } from 'vue-router';
+  import { useAuthStore } from '@/stores/auth';
+  import { Menu, X, ChevronDown, LogIn } from 'lucide-vue-next';
+  import type { NavItem } from '@/types';
 
-const authStore = useAuthStore();
-const mobileOpen = ref(false);
-const scrolled = ref(false);
-const activeDropdown = ref<string | null>(null);
+  const authStore = useAuthStore();
+  const mobileOpen = ref(false);
+  const scrolled = ref(false);
+  const activeDropdown = ref<string | null>(null);
 
-// Per-item hover timers — prevents flicker when moving mouse between trigger and panel
-const closeTimers = new Map<string, ReturnType<typeof setTimeout>>();
+  // Per-item hover timers — prevents flicker when moving mouse between trigger and panel
+  const closeTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
-const navItems: NavItem[] = [
-  {
-    label: 'Programy',
-    children: [
-      { label: 'Prehľad programov',       to: '/programy' },
-      { label: 'Program A — Inkubácia',   to: '/programy/program-a' },
-      { label: 'Program B — Živá prax',   to: '/programy/program-b' },
-      { label: 'Výzvy',                   to: '/programy/vyzvy' },
-      { label: 'Podmienky',               to: '/programy/podmienky' },
-    ],
-  },
-  {
-    label: 'Pre firmy',
-    children: [
-      { label: 'Prehľad',               to: '/pre-firmy' },
-      { label: 'Ako fungujú projekty',  to: '/pre-firmy/ako-funguju-projekty' },
-      { label: 'Partneri',              to: '/pre-firmy/partneri' },
-      { label: 'Mentori',              to: '/pre-firmy/mentori' },
-    ],
-  },
-  {
-    label: 'O NTI',
-    children: [
-      { label: 'O nás',      to: '/o-nti' },
-      { label: 'Naša misia', to: '/o-nti/nasa-misia' },
-      { label: 'FAQ',        to: '/o-nti/faq' },
-      { label: 'Novinky',    to: '/o-nti/novinky' },
-      { label: 'Kontakt',    to: '/o-nti/kontakt' },
-    ],
-  },
-];
+  const navItems: NavItem[] = [
+    {
+      label: 'Programy',
+      children: [
+        { label: 'Prehľad programov', to: '/programy' },
+        { label: 'Program A — Inkubácia', to: '/programy/program-a' },
+        { label: 'Program B — Živá prax', to: '/programy/program-b' },
+        { label: 'Výzvy', to: '/programy/vyzvy' },
+        { label: 'Podmienky', to: '/programy/podmienky' },
+      ],
+    },
+    {
+      label: 'Pre firmy',
+      children: [
+        { label: 'Prehľad', to: '/pre-firmy' },
+        { label: 'Ako fungujú projekty', to: '/pre-firmy/ako-funguju-projekty' },
+        { label: 'Partneri', to: '/pre-firmy/partneri' },
+        { label: 'Mentori', to: '/pre-firmy/mentori' },
+      ],
+    },
+    {
+      label: 'O NTI',
+      children: [
+        { label: 'O nás', to: '/o-nti' },
+        { label: 'Naša misia', to: '/o-nti/nasa-misia' },
+        { label: 'FAQ', to: '/o-nti/faq' },
+        { label: 'Novinky', to: '/o-nti/novinky' },
+        { label: 'Kontakt', to: '/o-nti/kontakt' },
+      ],
+    },
+  ];
 
-const navbarClass = computed(() =>
-  scrolled.value
-    ? 'bg-nti-black/95 backdrop-blur-sm border-b border-nti-border shadow-lg'
-    : 'bg-transparent',
-);
+  const navbarClass = computed(() =>
+    scrolled.value
+      ? 'bg-nti-black/95 backdrop-blur-sm border-b border-nti-border shadow-lg'
+      : 'bg-transparent'
+  );
 
-// ── Hover open / close with delay ──────────────────────────────────────────
-function openDropdown(label: string): void {
-  // Cancel any pending close for this item
-  const t = closeTimers.get(label);
-  if (t) clearTimeout(t);
-  activeDropdown.value = label;
-}
+  // ── Hover open / close with delay ──────────────────────────────────────────
+  function openDropdown(label: string): void {
+    // Cancel any pending close for this item
+    const t = closeTimers.get(label);
+    if (t) clearTimeout(t);
+    activeDropdown.value = label;
+  }
 
-function scheduleClose(label: string): void {
-  const t = setTimeout(() => {
-    if (activeDropdown.value === label) activeDropdown.value = null;
-    closeTimers.delete(label);
-  }, 120); // 120ms grace period — enough to move mouse to the panel
-  closeTimers.set(label, t);
-}
+  function scheduleClose(label: string): void {
+    const t = setTimeout(() => {
+      if (activeDropdown.value === label) activeDropdown.value = null;
+      closeTimers.delete(label);
+    }, 120); // 120ms grace period — enough to move mouse to the panel
+    closeTimers.set(label, t);
+  }
 
-// ── Click toggle (also works for keyboard nav) ─────────────────────────────
-function toggleDropdown(label: string): void {
-  activeDropdown.value = activeDropdown.value === label ? null : label;
-}
+  // ── Click toggle (also works for keyboard nav) ─────────────────────────────
+  function toggleDropdown(label: string): void {
+    activeDropdown.value = activeDropdown.value === label ? null : label;
+  }
 
-// Close immediately when a link is clicked
-function closeNow(): void {
-  activeDropdown.value = null;
-}
-
-// Close on click outside
-function handleOutsideClick(e: MouseEvent): void {
-  const nav = document.getElementById('nti-nav');
-  if (nav && !nav.contains(e.target as Node)) {
+  // Close immediately when a link is clicked
+  function closeNow(): void {
     activeDropdown.value = null;
   }
-}
 
-// Close on Escape
-function handleKeydown(e: KeyboardEvent): void {
-  if (e.key === 'Escape') {
-    activeDropdown.value = null;
-    mobileOpen.value = false;
+  // Close on click outside
+  function handleOutsideClick(e: MouseEvent): void {
+    const nav = document.getElementById('nti-nav');
+    if (nav && !nav.contains(e.target as Node)) {
+      activeDropdown.value = null;
+    }
   }
-}
 
-function handleScroll(): void {
-  scrolled.value = window.scrollY > 20;
-}
+  // Close on Escape
+  function handleKeydown(e: KeyboardEvent): void {
+    if (e.key === 'Escape') {
+      activeDropdown.value = null;
+      mobileOpen.value = false;
+    }
+  }
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  window.addEventListener('click', handleOutsideClick);
-  window.addEventListener('keydown', handleKeydown);
-  handleScroll();
-});
+  function handleScroll(): void {
+    scrolled.value = window.scrollY > 20;
+  }
 
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-  window.removeEventListener('click', handleOutsideClick);
-  window.removeEventListener('keydown', handleKeydown);
-  closeTimers.forEach((t) => clearTimeout(t));
-});
+  onMounted(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('click', handleOutsideClick);
+    window.addEventListener('keydown', handleKeydown);
+    handleScroll();
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('click', handleOutsideClick);
+    window.removeEventListener('keydown', handleKeydown);
+    closeTimers.forEach((t) => clearTimeout(t));
+  });
 </script>
 
 <template>
-  <header
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-    :class="navbarClass"
-  >
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" :class="navbarClass">
     <div class="container-nti">
       <nav
         id="nti-nav"
@@ -234,7 +231,9 @@ onUnmounted(() => {
           <template v-for="item in navItems" :key="item.label">
             <div class="mb-4">
               <!-- Section label -->
-              <p class="px-3 pt-1 pb-2 text-xs font-semibold uppercase tracking-widest text-nti-muted font-mono">
+              <p
+                class="px-3 pt-1 pb-2 text-xs font-semibold uppercase tracking-widest text-nti-muted font-mono"
+              >
                 {{ item.label }}
               </p>
               <!-- Links -->
@@ -288,33 +287,41 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* ── Dropdown animation ──────────────────────────────────────────────── */
-.dropdown-enter-active {
-  transition: opacity 0.15s ease, transform 0.15s ease;
-}
-.dropdown-leave-active {
-  transition: opacity 0.1s ease, transform 0.1s ease;
-}
-.dropdown-enter-from,
-.dropdown-leave-to {
-  opacity: 0;
-  transform: translateY(-4px);
-}
+  /* ── Dropdown animation ──────────────────────────────────────────────── */
+  .dropdown-enter-active {
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+  }
+  .dropdown-leave-active {
+    transition:
+      opacity 0.1s ease,
+      transform 0.1s ease;
+  }
+  .dropdown-enter-from,
+  .dropdown-leave-to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 
-/* ── Mobile menu animation ───────────────────────────────────────────── */
-.mobile-menu-enter-active {
-  transition: opacity 0.2s ease, max-height 0.28s ease;
-  overflow: hidden;
-  max-height: 80vh;
-}
-.mobile-menu-leave-active {
-  transition: opacity 0.15s ease, max-height 0.2s ease;
-  overflow: hidden;
-  max-height: 80vh;
-}
-.mobile-menu-enter-from,
-.mobile-menu-leave-to {
-  opacity: 0;
-  max-height: 0 !important;
-}
+  /* ── Mobile menu animation ───────────────────────────────────────────── */
+  .mobile-menu-enter-active {
+    transition:
+      opacity 0.2s ease,
+      max-height 0.28s ease;
+    overflow: hidden;
+    max-height: 80vh;
+  }
+  .mobile-menu-leave-active {
+    transition:
+      opacity 0.15s ease,
+      max-height 0.2s ease;
+    overflow: hidden;
+    max-height: 80vh;
+  }
+  .mobile-menu-enter-from,
+  .mobile-menu-leave-to {
+    opacity: 0;
+    max-height: 0 !important;
+  }
 </style>

@@ -1,31 +1,31 @@
 <script setup lang="ts">
-interface Props {
-  id?: string;
-  label?: string;
-  type?: string;
-  placeholder?: string;
-  error?: string;
-  hint?: string;
-  required?: boolean;
-  disabled?: boolean;
-  modelValue?: string | number;
-}
+  interface Props {
+    id?: string;
+    label?: string;
+    type?: string;
+    placeholder?: string;
+    error?: string;
+    hint?: string;
+    required?: boolean;
+    disabled?: boolean;
+    modelValue?: string | number;
+  }
 
-const props = withDefaults(defineProps<Props>(), {
-  id: undefined,
-  label: undefined,
-  type: 'text',
-  placeholder: '',
-  error: undefined,
-  hint: undefined,
-  required: false,
-  disabled: false,
-  modelValue: '',
-});
+  const props = withDefaults(defineProps<Props>(), {
+    id: undefined,
+    label: undefined,
+    type: 'text',
+    placeholder: '',
+    error: undefined,
+    hint: undefined,
+    required: false,
+    disabled: false,
+    modelValue: '',
+  });
 
-const emit = defineEmits<{
-  'update:modelValue': [value: string];
-}>();
+  const emit = defineEmits<{
+    'update:modelValue': [value: string];
+  }>();
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { ArrowRight, CheckCircle, AlertCircle, Info, FileText, Users } from 'lucide-vue-next';
+  import { RouterLink } from 'vue-router';
+  import { ArrowRight, CheckCircle, AlertCircle, Info, FileText, Users } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -12,53 +12,66 @@ import { ArrowRight, CheckCircle, AlertCircle, Info, FileText, Users } from 'luc
           Podmienky účasti
         </h1>
         <p class="text-nti-gray text-lg max-w-xl leading-relaxed">
-          Kto sa môže zapojiť, aké sú požiadavky na tím a čo je potrebné doložiť
-          pri prihlásení do Programu A alebo B.
+          Kto sa môže zapojiť, aké sú požiadavky na tím a čo je potrebné doložiť pri prihlásení do
+          Programu A alebo B.
         </p>
       </div>
     </section>
 
     <section class="py-20 bg-nti-black">
       <div class="container-nti max-w-3xl space-y-6">
-
         <!-- Program A – študenti -->
         <div class="card-nti p-8">
           <h2 class="font-display text-2xl font-bold text-nti-white mb-2 flex items-center gap-3">
-            <div class="size-8 rounded-lg bg-nti-green-dim border border-nti-green/20 flex items-center justify-center">
+            <div
+              class="size-8 rounded-lg bg-nti-green-dim border border-nti-green/20 flex items-center justify-center"
+            >
               <span class="font-mono text-xs font-bold text-nti-green">A</span>
             </div>
             Program A — Grantový inkubačný program
           </h2>
           <p class="text-sm text-nti-gray mb-6 leading-relaxed">
-            Podmienky výberu nie sú tvrdou automatickou diskvalifikáciou —
-            fungujú ako hodnotiace signály pre komisiu. Akademická spôsobilosť sa
-            pri MVP overuje čestným vyhlásením a uploadom podkladov.
+            Podmienky výberu nie sú tvrdou automatickou diskvalifikáciou — fungujú ako hodnotiace
+            signály pre komisiu. Akademická spôsobilosť sa pri MVP overuje čestným vyhlásením a
+            uploadom podkladov.
           </p>
 
           <div class="grid sm:grid-cols-2 gap-6">
             <div>
-              <p class="font-mono text-xs text-nti-green uppercase tracking-widest mb-3">Osobné podmienky</p>
+              <p class="font-mono text-xs text-nti-green uppercase tracking-widest mb-3">
+                Osobné podmienky
+              </p>
               <ul class="space-y-2">
-                <li v-for="c in [
-                  'Aktívny študent vysokej školy na Slovensku',
-                  'Bez prenášaných predmetov z profilových predmetov',
-                  'Priemer profilových predmetov pod definovanou hranicou',
-                  'Súhlas so spracovaním osobných údajov (GDPR)',
-                ]" :key="c" class="flex items-start gap-2 text-sm text-nti-gray">
+                <li
+                  v-for="c in [
+                    'Aktívny študent vysokej školy na Slovensku',
+                    'Bez prenášaných predmetov z profilových predmetov',
+                    'Priemer profilových predmetov pod definovanou hranicou',
+                    'Súhlas so spracovaním osobných údajov (GDPR)',
+                  ]"
+                  :key="c"
+                  class="flex items-start gap-2 text-sm text-nti-gray"
+                >
                   <CheckCircle class="size-4 text-nti-green shrink-0 mt-0.5" />
                   {{ c }}
                 </li>
               </ul>
             </div>
             <div>
-              <p class="font-mono text-xs text-nti-green uppercase tracking-widest mb-3">Podmienky tímu</p>
+              <p class="font-mono text-xs text-nti-green uppercase tracking-widest mb-3">
+                Podmienky tímu
+              </p>
               <ul class="space-y-2">
-                <li v-for="c in [
-                  'Minimálna veľkosť tímu: 3 členovia',
-                  'Vlastný inovatívny nápad v niektorej z 5 kategórií',
-                  'Čestné vyhlásenie o akademickej spôsobilosti',
-                  'Podanie prihlášky pred deadlinom výzvy',
-                ]" :key="c" class="flex items-start gap-2 text-sm text-nti-gray">
+                <li
+                  v-for="c in [
+                    'Minimálna veľkosť tímu: 3 členovia',
+                    'Vlastný inovatívny nápad v niektorej z 5 kategórií',
+                    'Čestné vyhlásenie o akademickej spôsobilosti',
+                    'Podanie prihlášky pred deadlinom výzvy',
+                  ]"
+                  :key="c"
+                  class="flex items-start gap-2 text-sm text-nti-gray"
+                >
                   <CheckCircle class="size-4 text-nti-green shrink-0 mt-0.5" />
                   {{ c }}
                 </li>
@@ -68,20 +81,28 @@ import { ArrowRight, CheckCircle, AlertCircle, Info, FileText, Users } from 'luc
 
           <!-- Povinná dokumentácia A -->
           <div class="mt-6 border-t border-nti-border pt-6">
-            <p class="font-mono text-xs text-nti-green uppercase tracking-widest mb-4 flex items-center gap-2">
+            <p
+              class="font-mono text-xs text-nti-green uppercase tracking-widest mb-4 flex items-center gap-2"
+            >
               <FileText class="size-3.5" />
               Povinná projektová dokumentácia
             </p>
             <div class="grid sm:grid-cols-2 gap-3">
-              <div v-for="(doc, i) in [
-                'Executive Summary — problém, riešenie, trh, prínos',
-                'Technická architektúra — technológie, moduly, prevádzka',
-                'Roadmapa — míľniky, harmonogram realizácie',
-                'Rozpočet — plán čerpania grantu a náklady',
-                'Riziková analýza — riziká, dopady, mitigácie',
-                'Monetizačný model — tvorba hodnoty a príjmov',
-              ]" :key="doc" class="flex items-start gap-2 text-sm text-nti-gray">
-                <span class="size-5 rounded-full bg-nti-surface border border-nti-border flex items-center justify-center font-mono text-xs text-nti-muted shrink-0 mt-0.5">
+              <div
+                v-for="(doc, i) in [
+                  'Executive Summary — problém, riešenie, trh, prínos',
+                  'Technická architektúra — technológie, moduly, prevádzka',
+                  'Roadmapa — míľniky, harmonogram realizácie',
+                  'Rozpočet — plán čerpania grantu a náklady',
+                  'Riziková analýza — riziká, dopady, mitigácie',
+                  'Monetizačný model — tvorba hodnoty a príjmov',
+                ]"
+                :key="doc"
+                class="flex items-start gap-2 text-sm text-nti-gray"
+              >
+                <span
+                  class="size-5 rounded-full bg-nti-surface border border-nti-border flex items-center justify-center font-mono text-xs text-nti-muted shrink-0 mt-0.5"
+                >
                   {{ i + 1 }}
                 </span>
                 {{ doc }}
@@ -93,24 +114,30 @@ import { ArrowRight, CheckCircle, AlertCircle, Info, FileText, Users } from 'luc
         <!-- Program B – firmy -->
         <div class="card-nti p-8">
           <h2 class="font-display text-2xl font-bold text-nti-white mb-2 flex items-center gap-3">
-            <div class="size-8 rounded-lg bg-nti-green-dim border border-nti-green/20 flex items-center justify-center">
+            <div
+              class="size-8 rounded-lg bg-nti-green-dim border border-nti-green/20 flex items-center justify-center"
+            >
               <span class="font-mono text-xs font-bold text-nti-green">B</span>
             </div>
             Program B — Živá prax (firmy)
           </h2>
           <p class="text-sm text-nti-gray mb-6 leading-relaxed">
-            Firma vstupuje do programu ako zadávateľ. Pre úspešný onboarding musí
-            mať vyplnený firemný profil a pripravenú technickú špecifikáciu.
+            Firma vstupuje do programu ako zadávateľ. Pre úspešný onboarding musí mať vyplnený
+            firemný profil a pripravenú technickú špecifikáciu.
           </p>
           <ul class="space-y-2">
-            <li v-for="c in [
-              'Registrovaná právnická osoba v SR alebo EÚ',
-              'Vyplnený firemný profil s IČO, sektorom a kontaktmi',
-              'Definovaná technická špecifikácia projektu',
-              'Pridelený Product Owner za stranu firmy',
-              'Alokovaný rozpočet na odmenu študentského tímu',
-              'Možnosť zadať jednu alebo viac špecifikácií ročne',
-            ]" :key="c" class="flex items-start gap-2 text-sm text-nti-gray">
+            <li
+              v-for="c in [
+                'Registrovaná právnická osoba v SR alebo EÚ',
+                'Vyplnený firemný profil s IČO, sektorom a kontaktmi',
+                'Definovaná technická špecifikácia projektu',
+                'Pridelený Product Owner za stranu firmy',
+                'Alokovaný rozpočet na odmenu študentského tímu',
+                'Možnosť zadať jednu alebo viac špecifikácií ročne',
+              ]"
+              :key="c"
+              class="flex items-start gap-2 text-sm text-nti-gray"
+            >
               <CheckCircle class="size-4 text-nti-green shrink-0 mt-0.5" />
               {{ c }}
             </li>
@@ -124,18 +151,22 @@ import { ArrowRight, CheckCircle, AlertCircle, Info, FileText, Users } from 'luc
             Program B — Živá prax (študentský tím)
           </h2>
           <p class="text-sm text-nti-gray mb-6 leading-relaxed">
-            Tím sa prihlasuje na konkrétne firemné zadanie. Výber realizuje komisia
-            spoločne so zástupcom firmy ad hoc podľa backlogu projektov.
+            Tím sa prihlasuje na konkrétne firemné zadanie. Výber realizuje komisia spoločne so
+            zástupcom firmy ad hoc podľa backlogu projektov.
           </p>
           <div class="grid sm:grid-cols-2 gap-3">
-            <div v-for="c in [
-              'Aktívni študenti VŠ na Slovensku',
-              'Zostavený tím s definovanými rolami',
-              'Odovzdanie CV každého člena tímu',
-              'Motivačný list k danému zadaniu',
-              'Návrh realizačného riešenia (technický)',
-              'Súhlas so spracovaním osobných údajov',
-            ]" :key="c" class="flex items-start gap-2 text-sm text-nti-gray">
+            <div
+              v-for="c in [
+                'Aktívni študenti VŠ na Slovensku',
+                'Zostavený tím s definovanými rolami',
+                'Odovzdanie CV každého člena tímu',
+                'Motivačný list k danému zadaniu',
+                'Návrh realizačného riešenia (technický)',
+                'Súhlas so spracovaním osobných údajov',
+              ]"
+              :key="c"
+              class="flex items-start gap-2 text-sm text-nti-gray"
+            >
               <CheckCircle class="size-4 text-nti-green shrink-0 mt-0.5" />
               {{ c }}
             </div>
@@ -162,7 +193,8 @@ import { ArrowRight, CheckCircle, AlertCircle, Info, FileText, Users } from 'luc
             <p class="font-medium text-yellow-300 mb-1 text-sm">Dôležité upozornenie</p>
             <p class="text-sm text-nti-gray leading-relaxed">
               Prihlášky sa podávajú výhradne cez NTI portál pred uzávierkou príslušnej výzvy.
-              Neúplné prihlášky môžu byť vrátené na doplnenie alebo zamietnuté pri formálnej kontrole.
+              Neúplné prihlášky môžu byť vrátené na doplnenie alebo zamietnuté pri formálnej
+              kontrole.
             </p>
           </div>
         </div>
@@ -176,9 +208,7 @@ import { ArrowRight, CheckCircle, AlertCircle, Info, FileText, Users } from 'luc
           <RouterLink :to="{ name: 'register-company' }" class="btn-outline">
             Registrácia firmy
           </RouterLink>
-          <RouterLink :to="{ name: 'faq' }" class="btn-ghost">
-            Pozrieť FAQ
-          </RouterLink>
+          <RouterLink :to="{ name: 'faq' }" class="btn-ghost"> Pozrieť FAQ </RouterLink>
         </div>
       </div>
     </section>

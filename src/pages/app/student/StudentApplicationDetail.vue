@@ -1,56 +1,53 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from 'vue';
-import { useRoute, RouterLink } from 'vue-router';
-import {
-  ArrowLeft,
-  FileText,
-  Clock,
-  Loader2,
-  CheckCircle,
-  XCircle,
-  AlertCircle,
-} from 'lucide-vue-next';
-import { useApplicationStore } from '@/stores/applications';
-import NtiStatusBadge from '@/components/ui/NtiStatusBadge.vue';
-import NtiAlert from '@/components/ui/NtiAlert.vue';
+  import { onMounted, onBeforeUnmount } from 'vue';
+  import { useRoute, RouterLink } from 'vue-router';
+  import {
+    ArrowLeft,
+    FileText,
+    Clock,
+    Loader2,
+    CheckCircle,
+    XCircle,
+    AlertCircle,
+  } from 'lucide-vue-next';
+  import { useApplicationStore } from '@/stores/applications';
+  import NtiStatusBadge from '@/components/ui/NtiStatusBadge.vue';
+  import NtiAlert from '@/components/ui/NtiAlert.vue';
 
-const route = useRoute();
-const appStore = useApplicationStore();
+  const route = useRoute();
+  const appStore = useApplicationStore();
 
-const id = Number(route.params['id']);
+  const id = Number(route.params['id']);
 
-onMounted(() => {
-  void appStore.fetchApplication(id);
-});
+  onMounted(() => {
+    void appStore.fetchApplication(id);
+  });
 
-onBeforeUnmount(() => {
-  appStore.clearCurrent();
-});
+  onBeforeUnmount(() => {
+    appStore.clearCurrent();
+  });
 
-function formatDate(dateStr: string): string {
-  return new Intl.DateTimeFormat('sk-SK', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(new Date(dateStr));
-}
+  function formatDate(dateStr: string): string {
+    return new Intl.DateTimeFormat('sk-SK', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(dateStr));
+  }
 
-const eventIcons: Record<string, typeof CheckCircle> = {
-  approved: CheckCircle,
-  rejected: XCircle,
-  revision_requested: AlertCircle,
-};
+  const eventIcons: Record<string, typeof CheckCircle> = {
+    approved: CheckCircle,
+    rejected: XCircle,
+    revision_requested: AlertCircle,
+  };
 </script>
 
 <template>
   <div>
     <!-- Back link -->
-    <RouterLink
-      :to="{ name: 'student-applications' }"
-      class="btn-ghost text-sm mb-6 inline-flex"
-    >
+    <RouterLink :to="{ name: 'student-applications' }" class="btn-ghost text-sm mb-6 inline-flex">
       <ArrowLeft class="size-4" />
       Späť na zoznam
     </RouterLink>
@@ -72,9 +69,7 @@ const eventIcons: Record<string, typeof CheckCircle> = {
           </h1>
           <NtiStatusBadge :status="appStore.current.status" />
         </div>
-        <div class="text-xs text-nti-muted font-mono shrink-0">
-          ID: #{{ appStore.current.id }}
-        </div>
+        <div class="text-xs text-nti-muted font-mono shrink-0">ID: #{{ appStore.current.id }}</div>
       </div>
 
       <!-- Revision alert -->
@@ -92,7 +87,7 @@ const eventIcons: Record<string, typeof CheckCircle> = {
         <!-- Main content -->
         <div class="lg:col-span-2 space-y-5">
           <!-- Motivation letter -->
-          <div class="card-nti p-6" v-if="appStore.current.motivationLetter">
+          <div v-if="appStore.current.motivationLetter" class="card-nti p-6">
             <h2 class="font-display font-semibold text-nti-white mb-3 flex items-center gap-2">
               <FileText class="size-4 text-nti-green" />
               Motivačný list
@@ -122,7 +117,9 @@ const eventIcons: Record<string, typeof CheckCircle> = {
                 <FileText class="size-4 text-nti-green shrink-0" />
                 <div class="flex-1 min-w-0">
                   <p class="text-sm text-nti-white truncate">{{ doc.name }}</p>
-                  <p class="text-xs text-nti-muted">{{ doc.type }} · {{ formatDate(doc.uploadedAt) }}</p>
+                  <p class="text-xs text-nti-muted">
+                    {{ doc.type }} · {{ formatDate(doc.uploadedAt) }}
+                  </p>
                 </div>
               </a>
             </div>
@@ -144,7 +141,9 @@ const eventIcons: Record<string, typeof CheckCircle> = {
                   :key="event.id"
                   class="flex gap-4 relative"
                 >
-                  <div class="size-7 rounded-full bg-nti-surface border border-nti-border flex items-center justify-center shrink-0 z-10">
+                  <div
+                    class="size-7 rounded-full bg-nti-surface border border-nti-border flex items-center justify-center shrink-0 z-10"
+                  >
                     <component
                       :is="eventIcons[event.status] ?? Clock"
                       class="size-3.5"
@@ -152,8 +151,8 @@ const eventIcons: Record<string, typeof CheckCircle> = {
                         event.status === 'approved'
                           ? 'text-nti-green'
                           : event.status === 'rejected'
-                          ? 'text-red-400'
-                          : 'text-nti-gray'
+                            ? 'text-red-400'
+                            : 'text-nti-gray'
                       "
                     />
                   </div>

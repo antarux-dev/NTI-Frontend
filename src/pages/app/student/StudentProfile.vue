@@ -1,75 +1,75 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { z } from 'zod';
-import { Loader2, Upload, User, Save } from 'lucide-vue-next';
-import { useProfileStore } from '@/stores/profile';
-import NtiAlert from '@/components/ui/NtiAlert.vue';
+  import { onMounted, ref } from 'vue';
+  import { useForm } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
+  import { Loader2, Upload, User, Save } from 'lucide-vue-next';
+  import { useProfileStore } from '@/stores/profile';
+  import NtiAlert from '@/components/ui/NtiAlert.vue';
 
-const profileStore = useProfileStore();
-const cvFile = ref<File | null>(null);
-const cvInputRef = ref<HTMLInputElement | null>(null);
+  const profileStore = useProfileStore();
+  const cvFile = ref<File | null>(null);
+  const cvInputRef = ref<HTMLInputElement | null>(null);
 
-onMounted(() => {
-  void profileStore.fetchStudentProfile();
-});
+  onMounted(() => {
+    void profileStore.fetchStudentProfile();
+  });
 
-const schema = z.object({
-  firstName: z.string().min(2, 'Meno je povinné'),
-  lastName: z.string().min(2, 'Priezvisko je povinné'),
-  studyProgram: z.string().min(2, 'Zadajte program'),
-  yearOfStudy: z.coerce.number().int().min(1).max(6),
-});
+  const schema = z.object({
+    firstName: z.string().min(2, 'Meno je povinné'),
+    lastName: z.string().min(2, 'Priezvisko je povinné'),
+    studyProgram: z.string().min(2, 'Zadajte program'),
+    yearOfStudy: z.coerce.number().int().min(1).max(6),
+  });
 
-const { handleSubmit, errors, defineField, setValues, isSubmitting } = useForm({
-  validationSchema: toTypedSchema(schema),
-});
+  const { handleSubmit, errors, defineField, setValues, isSubmitting } = useForm({
+    validationSchema: toTypedSchema(schema),
+  });
 
-const [firstName, firstNameAttrs] = defineField('firstName');
-const [lastName, lastNameAttrs] = defineField('lastName');
-const [studyProgram, studyProgramAttrs] = defineField('studyProgram');
-const [yearOfStudy, yearOfStudyAttrs] = defineField('yearOfStudy');
+  const [firstName, firstNameAttrs] = defineField('firstName');
+  const [lastName, lastNameAttrs] = defineField('lastName');
+  const [studyProgram, studyProgramAttrs] = defineField('studyProgram');
+  const [yearOfStudy, yearOfStudyAttrs] = defineField('yearOfStudy');
 
-// Prefill form when profile loads
-onMounted(() => {
-  const unwatch = setInterval(() => {
-    if (profileStore.studentProfile) {
-      setValues({
-        firstName: '',
-        lastName: '',
-        studyProgram: profileStore.studentProfile.studyProgram,
-        yearOfStudy: profileStore.studentProfile.yearOfStudy,
-      });
-      clearInterval(unwatch);
+  // Prefill form when profile loads
+  onMounted(() => {
+    const unwatch = setInterval(() => {
+      if (profileStore.studentProfile) {
+        setValues({
+          firstName: '',
+          lastName: '',
+          studyProgram: profileStore.studentProfile.studyProgram,
+          yearOfStudy: profileStore.studentProfile.yearOfStudy,
+        });
+        clearInterval(unwatch);
+      }
+    }, 100);
+  });
+
+  const onSubmit = handleSubmit(async (values) => {
+    await profileStore.updateStudentProfile(values);
+  });
+
+  function handleCvChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.[0]) {
+      cvFile.value = input.files[0];
     }
-  }, 100);
-});
-
-const onSubmit = handleSubmit(async (values) => {
-  await profileStore.updateStudentProfile(values);
-});
-
-function handleCvChange(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  if (input.files?.[0]) {
-    cvFile.value = input.files[0];
   }
-}
 
-async function uploadCV(): Promise<void> {
-  if (!cvFile.value) return;
-  await profileStore.uploadCV(cvFile.value);
-  cvFile.value = null;
-}
+  async function uploadCV(): Promise<void> {
+    if (!cvFile.value) return;
+    await profileStore.uploadCV(cvFile.value);
+    cvFile.value = null;
+  }
 
-const studyPrograms = [
-  'Aplikovaná informatika',
-  'Informačné technológie',
-  'Počítačové inžinierstvo',
-  'Kybernetická bezpečnosť',
-  'Iné',
-];
+  const studyPrograms = [
+    'Aplikovaná informatika',
+    'Informačné technológie',
+    'Počítačové inžinierstvo',
+    'Kybernetická bezpečnosť',
+    'Iné',
+  ];
 </script>
 
 <template>
@@ -79,27 +79,19 @@ const studyPrograms = [
       <h1 class="font-display text-xl font-bold text-nti-white">Môj profil</h1>
     </div>
 
-    <NtiAlert
-      v-if="profileStore.successMessage"
-      variant="success"
-      :dismissible="true"
-      class="mb-5"
-    >
+    <NtiAlert v-if="profileStore.successMessage" variant="success" :dismissible="true" class="mb-5">
       {{ profileStore.successMessage }}
     </NtiAlert>
 
-    <NtiAlert
-      v-if="profileStore.error"
-      variant="error"
-      :dismissible="true"
-      class="mb-5"
-    >
+    <NtiAlert v-if="profileStore.error" variant="error" :dismissible="true" class="mb-5">
       {{ profileStore.error }}
     </NtiAlert>
 
     <!-- Avatar placeholder + CV -->
     <div class="card-nti p-6 flex items-center gap-6 mb-5">
-      <div class="size-16 rounded-2xl bg-nti-surface border border-nti-border flex items-center justify-center shrink-0">
+      <div
+        class="size-16 rounded-2xl bg-nti-surface border border-nti-border flex items-center justify-center shrink-0"
+      >
         <User class="size-8 text-nti-gray" />
       </div>
       <div class="flex-1">
@@ -119,10 +111,7 @@ const studyPrograms = [
             class="hidden"
             @change="handleCvChange"
           />
-          <button
-            class="btn-outline text-sm"
-            @click="cvInputRef?.click()"
-          >
+          <button class="btn-outline text-sm" @click="cvInputRef?.click()">
             <Upload class="size-3.5" />
             Vybrať súbor
           </button>
@@ -187,7 +176,9 @@ const studyPrograms = [
               <option value="" disabled>Vybrať</option>
               <option v-for="p in studyPrograms" :key="p" :value="p">{{ p }}</option>
             </select>
-            <p v-if="errors.studyProgram" class="mt-1 text-xs text-red-400">{{ errors.studyProgram }}</p>
+            <p v-if="errors.studyProgram" class="mt-1 text-xs text-red-400">
+              {{ errors.studyProgram }}
+            </p>
           </div>
           <div>
             <label for="yearOfStudy" class="label-nti">Ročník</label>
@@ -203,11 +194,7 @@ const studyPrograms = [
         </div>
 
         <div class="flex justify-end pt-1">
-          <button
-            type="submit"
-            class="btn-primary"
-            :disabled="isSubmitting"
-          >
+          <button type="submit" class="btn-primary" :disabled="isSubmitting">
             <Loader2 v-if="isSubmitting" class="size-4 animate-spin" />
             <Save v-else class="size-4" />
             Uložiť zmeny

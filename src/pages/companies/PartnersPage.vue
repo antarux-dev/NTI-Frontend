@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Building2 } from 'lucide-vue-next';
+  import { Building2 } from 'lucide-vue-next';
 
-const partners = [
-  { name: 'UKF Nitra', sector: 'Akademická inštitúcia', website: 'https://www.ukf.sk' },
-  { name: 'Fakulta PVaI', sector: 'Vzdelávanie', website: 'https://www.fpvai.ukf.sk' },
-];
+  const partners = [
+    { name: 'UKF Nitra', sector: 'Akademická inštitúcia', website: 'https://www.ukf.sk' },
+    { name: 'Fakulta PVaI', sector: 'Vzdelávanie', website: 'https://www.fpvai.ukf.sk' },
+  ];
 </script>
 
 <template>
@@ -28,10 +28,14 @@ const partners = [
             rel="noopener noreferrer"
             class="card-nti group p-6 block"
           >
-            <div class="size-12 rounded-xl bg-nti-surface border border-nti-border flex items-center justify-center mb-4">
+            <div
+              class="size-12 rounded-xl bg-nti-surface border border-nti-border flex items-center justify-center mb-4"
+            >
               <Building2 class="size-6 text-nti-gray" />
             </div>
-            <h3 class="font-display font-semibold text-nti-white group-hover:text-nti-green transition-colors mb-1">
+            <h3
+              class="font-display font-semibold text-nti-white group-hover:text-nti-green transition-colors mb-1"
+            >
               {{ partner.name }}
             </h3>
             <p class="text-xs text-nti-muted font-mono">{{ partner.sector }}</p>
@@ -39,7 +43,9 @@ const partners = [
 
           <!-- Coming soon placeholder -->
           <div class="card-nti p-6 border-dashed opacity-50">
-            <div class="size-12 rounded-xl bg-nti-surface border border-dashed border-nti-border flex items-center justify-center mb-4">
+            <div
+              class="size-12 rounded-xl bg-nti-surface border border-dashed border-nti-border flex items-center justify-center mb-4"
+            >
               <span class="text-nti-muted text-lg">+</span>
             </div>
             <p class="font-display font-medium text-nti-gray">Váš logo tu</p>

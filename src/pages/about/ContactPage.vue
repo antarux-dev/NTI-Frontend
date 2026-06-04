@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { z } from 'zod';
-import { Loader2, CheckCircle, MapPin, Mail, Globe } from 'lucide-vue-next';
+  import { ref } from 'vue';
+  import { useForm } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
+  import { Loader2, CheckCircle, MapPin, Mail, Globe } from 'lucide-vue-next';
 
-const success = ref(false);
+  const success = ref(false);
 
-const schema = z.object({
-  name: z.string().min(2, 'Meno je povinné'),
-  email: z.string().email('Zadajte platný e-mail'),
-  subject: z.string().min(3, 'Predmet je povinný'),
-  message: z.string().min(10, 'Správa musí mať aspoň 10 znakov'),
-});
+  const schema = z.object({
+    name: z.string().min(2, 'Meno je povinné'),
+    email: z.string().email('Zadajte platný e-mail'),
+    subject: z.string().min(3, 'Predmet je povinný'),
+    message: z.string().min(10, 'Správa musí mať aspoň 10 znakov'),
+  });
 
-const { handleSubmit, errors, defineField, isSubmitting } = useForm({
-  validationSchema: toTypedSchema(schema),
-});
+  const { handleSubmit, errors, defineField, isSubmitting } = useForm({
+    validationSchema: toTypedSchema(schema),
+  });
 
-const [name, nameAttrs] = defineField('name');
-const [email, emailAttrs] = defineField('email');
-const [subject, subjectAttrs] = defineField('subject');
-const [message, messageAttrs] = defineField('message');
+  const [name, nameAttrs] = defineField('name');
+  const [email, emailAttrs] = defineField('email');
+  const [subject, subjectAttrs] = defineField('subject');
+  const [message, messageAttrs] = defineField('message');
 
-const onSubmit = handleSubmit(async (_values) => {
-  // TODO: integrate with backend contact endpoint
-  await new Promise((r) => setTimeout(r, 800));
-  success.value = true;
-});
+  const onSubmit = handleSubmit(async (_values) => {
+    // TODO: integrate with backend contact endpoint
+    await new Promise((r) => setTimeout(r, 800));
+    success.value = true;
+  });
 </script>
 
 <template>
@@ -36,7 +36,9 @@ const onSubmit = handleSubmit(async (_values) => {
       <div class="container-nti">
         <p class="font-mono text-xs text-nti-green uppercase tracking-widest mb-3">// Kontakt</p>
         <h1 class="font-display text-5xl font-bold text-nti-white mb-4">Kontaktujte nás</h1>
-        <p class="text-nti-gray text-lg max-w-xl">Máte otázky? Napíšte nám alebo navštívte naše priestory.</p>
+        <p class="text-nti-gray text-lg max-w-xl">
+          Máte otázky? Napíšte nám alebo navštívte naše priestory.
+        </p>
       </div>
     </section>
 
@@ -94,7 +96,9 @@ const onSubmit = handleSubmit(async (_values) => {
                     :class="{ error: errors.subject }"
                     placeholder="Predmet správy"
                   />
-                  <p v-if="errors.subject" class="mt-1 text-xs text-red-400">{{ errors.subject }}</p>
+                  <p v-if="errors.subject" class="mt-1 text-xs text-red-400">
+                    {{ errors.subject }}
+                  </p>
                 </div>
 
                 <div>
@@ -108,7 +112,9 @@ const onSubmit = handleSubmit(async (_values) => {
                     :class="{ error: errors.message }"
                     placeholder="Vaša správa..."
                   />
-                  <p v-if="errors.message" class="mt-1 text-xs text-red-400">{{ errors.message }}</p>
+                  <p v-if="errors.message" class="mt-1 text-xs text-red-400">
+                    {{ errors.message }}
+                  </p>
                 </div>
 
                 <button
@@ -137,7 +143,9 @@ const onSubmit = handleSubmit(async (_values) => {
             <div class="card-nti p-6">
               <Mail class="size-5 text-nti-green mb-3" />
               <h3 class="font-display font-semibold text-nti-white mb-2">E-mail</h3>
-              <a href="mailto:nti@ukf.sk" class="text-sm text-nti-green hover:underline">nti@ukf.sk</a>
+              <a href="mailto:nti@ukf.sk" class="text-sm text-nti-green hover:underline"
+                >nti@ukf.sk</a
+              >
             </div>
             <div class="card-nti p-6">
               <Globe class="size-5 text-nti-green mb-3" />

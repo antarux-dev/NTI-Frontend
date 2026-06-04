@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { ArrowRight } from 'lucide-vue-next';
+  import { RouterLink } from 'vue-router';
+  import { ArrowRight } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -58,7 +58,9 @@ import { ArrowRight } from 'lucide-vue-next';
               {{ step.phase }}
             </span>
             <div>
-              <h3 class="font-display text-lg font-semibold text-nti-white mb-2">{{ step.title }}</h3>
+              <h3 class="font-display text-lg font-semibold text-nti-white mb-2">
+                {{ step.title }}
+              </h3>
               <p class="text-sm text-nti-gray leading-relaxed">{{ step.desc }}</p>
             </div>
           </div>

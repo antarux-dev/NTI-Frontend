@@ -1,56 +1,56 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { RouterLink, useRoute } from 'vue-router';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { z } from 'zod';
-import { useAuthStore } from '@/stores/auth';
-import { Eye, EyeOff, Loader2, CheckCircle, KeyRound } from 'lucide-vue-next';
+  import { ref } from 'vue';
+  import { RouterLink, useRoute } from 'vue-router';
+  import { useForm } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
+  import { useAuthStore } from '@/stores/auth';
+  import { Eye, EyeOff, Loader2, CheckCircle, KeyRound } from 'lucide-vue-next';
 
-const route = useRoute();
-const authStore = useAuthStore();
-const showPassword = ref(false);
-const success = ref(false);
+  const route = useRoute();
+  const authStore = useAuthStore();
+  const showPassword = ref(false);
+  const success = ref(false);
 
-const schema = z
-  .object({
-    firstName: z.string().min(2, 'Meno je povinné'),
-    lastName: z.string().min(2, 'Priezvisko je povinné'),
-    email: z.string().email('Zadajte platný e-mail'),
-    password: z.string().min(8, 'Heslo musí mať aspoň 8 znakov'),
-    passwordConfirmation: z.string().min(1, 'Potvrďte heslo'),
-    inviteToken: z.string().min(6, 'Invite token je povinný'),
-    gdprConsent: z.literal(true, {
-      errorMap: () => ({ message: 'Musíte súhlasiť so spracovaním údajov' }),
-    }),
-  })
-  .refine((d) => d.password === d.passwordConfirmation, {
-    message: 'Heslá sa nezhodujú',
-    path: ['passwordConfirmation'],
+  const schema = z
+    .object({
+      firstName: z.string().min(2, 'Meno je povinné'),
+      lastName: z.string().min(2, 'Priezvisko je povinné'),
+      email: z.string().email('Zadajte platný e-mail'),
+      password: z.string().min(8, 'Heslo musí mať aspoň 8 znakov'),
+      passwordConfirmation: z.string().min(1, 'Potvrďte heslo'),
+      inviteToken: z.string().min(6, 'Invite token je povinný'),
+      gdprConsent: z.literal(true, {
+        errorMap: () => ({ message: 'Musíte súhlasiť so spracovaním údajov' }),
+      }),
+    })
+    .refine((d) => d.password === d.passwordConfirmation, {
+      message: 'Heslá sa nezhodujú',
+      path: ['passwordConfirmation'],
+    });
+
+  const { handleSubmit, errors, defineField, isSubmitting } = useForm({
+    validationSchema: toTypedSchema(schema),
+    initialValues: {
+      inviteToken: (route.query['token'] as string) ?? '',
+    },
   });
 
-const { handleSubmit, errors, defineField, isSubmitting } = useForm({
-  validationSchema: toTypedSchema(schema),
-  initialValues: {
-    inviteToken: (route.query['token'] as string) ?? '',
-  },
-});
+  const [firstName, firstNameAttrs] = defineField('firstName');
+  const [lastName, lastNameAttrs] = defineField('lastName');
+  const [email, emailAttrs] = defineField('email');
+  const [password, passwordAttrs] = defineField('password');
+  const [passwordConfirmation, passwordConfirmationAttrs] = defineField('passwordConfirmation');
+  const [inviteToken, inviteTokenAttrs] = defineField('inviteToken');
+  const [gdprConsent, gdprConsentAttrs] = defineField('gdprConsent');
 
-const [firstName, firstNameAttrs] = defineField('firstName');
-const [lastName, lastNameAttrs] = defineField('lastName');
-const [email, emailAttrs] = defineField('email');
-const [password, passwordAttrs] = defineField('password');
-const [passwordConfirmation, passwordConfirmationAttrs] = defineField('passwordConfirmation');
-const [inviteToken, inviteTokenAttrs] = defineField('inviteToken');
-const [gdprConsent, gdprConsentAttrs] = defineField('gdprConsent');
-
-const onSubmit = handleSubmit(async (values) => {
-  await authStore.registerMember({
-    ...values,
-    gdprConsent: values.gdprConsent as true,
+  const onSubmit = handleSubmit(async (values) => {
+    await authStore.registerMember({
+      ...values,
+      gdprConsent: values.gdprConsent as true,
+    });
+    success.value = true;
   });
-  success.value = true;
-});
 </script>
 
 <template>
@@ -58,9 +58,7 @@ const onSubmit = handleSubmit(async (values) => {
     <div v-if="success" class="text-center py-8">
       <CheckCircle class="size-12 text-nti-green mx-auto mb-4" />
       <h2 class="font-display text-xl font-bold text-nti-white mb-2">Registrácia úspešná!</h2>
-      <p class="text-nti-gray text-sm mb-6">
-        Váš účet bol vytvorený. Môžete sa prihlásiť.
-      </p>
+      <p class="text-nti-gray text-sm mb-6">Váš účet bol vytvorený. Môžete sa prihlásiť.</p>
       <RouterLink :to="{ name: 'login' }" class="btn-primary">Prihlásiť sa</RouterLink>
     </div>
 
@@ -79,8 +77,8 @@ const onSubmit = handleSubmit(async (values) => {
       <div class="mb-5 rounded-lg border border-nti-green/20 bg-nti-green-dim p-3 flex gap-3">
         <KeyRound class="size-4 text-nti-green shrink-0 mt-0.5" />
         <p class="text-sm text-nti-gray">
-          Na registráciu je potrebný <strong class="text-nti-white">invite token</strong>,
-          ktorý vám vygenerovala vaša firma v rámci NTI portálu.
+          Na registráciu je potrebný <strong class="text-nti-white">invite token</strong>, ktorý vám
+          vygenerovala vaša firma v rámci NTI portálu.
         </p>
       </div>
 
@@ -105,7 +103,9 @@ const onSubmit = handleSubmit(async (values) => {
             :class="{ error: errors.inviteToken }"
             placeholder="NTI-XXXX-XXXX"
           />
-          <p v-if="errors.inviteToken" class="mt-1 text-xs text-red-400">{{ errors.inviteToken }}</p>
+          <p v-if="errors.inviteToken" class="mt-1 text-xs text-red-400">
+            {{ errors.inviteToken }}
+          </p>
         </div>
 
         <!-- Name -->
@@ -204,7 +204,8 @@ const onSubmit = handleSubmit(async (values) => {
             class="mt-0.5 size-4 rounded accent-nti-green cursor-pointer"
           />
           <label for="gdprConsent" class="text-xs text-nti-gray cursor-pointer leading-relaxed">
-            Súhlasím so <a href="#" class="text-nti-green hover:underline">spracovaním osobných údajov</a>.
+            Súhlasím so
+            <a href="#" class="text-nti-green hover:underline">spracovaním osobných údajov</a>.
           </label>
         </div>
         <p v-if="errors.gdprConsent" class="text-xs text-red-400">{{ errors.gdprConsent }}</p>

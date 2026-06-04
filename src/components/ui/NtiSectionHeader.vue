@@ -1,19 +1,16 @@
 <script setup lang="ts">
-interface Props {
-  eyebrow?: string;
-  title: string;
-  subtitle?: string;
-}
+  interface Props {
+    eyebrow?: string;
+    title: string;
+    subtitle?: string;
+  }
 
-defineProps<Props>();
+  defineProps<Props>();
 </script>
 
 <template>
   <div class="mb-10">
-    <p
-      v-if="eyebrow"
-      class="font-mono text-xs text-nti-green uppercase tracking-widest mb-3"
-    >
+    <p v-if="eyebrow" class="font-mono text-xs text-nti-green uppercase tracking-widest mb-3">
       // {{ eyebrow }}
     </p>
     <h2 class="font-display text-3xl md:text-4xl font-bold text-nti-white mb-3">

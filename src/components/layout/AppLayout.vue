@@ -1,51 +1,49 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { RouterView, RouterLink, useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
-import {
-  LayoutDashboard,
-  FileText,
-  Users,
-  User,
-  Briefcase,
-  LogOut,
-  Rocket,
-  Bell,
-} from 'lucide-vue-next';
+  import { computed } from 'vue';
+  import { RouterView, RouterLink, useRouter } from 'vue-router';
+  import { useAuthStore } from '@/stores/auth';
+  import {
+    LayoutDashboard,
+    FileText,
+    Users,
+    User,
+    Briefcase,
+    LogOut,
+    Rocket,
+    Bell,
+  } from 'lucide-vue-next';
 
-const authStore = useAuthStore();
-const router = useRouter();
+  const authStore = useAuthStore();
+  const router = useRouter();
 
-interface NavItem {
-  label: string;
-  to: string;
-  name: string;
-  icon: typeof LayoutDashboard;
-}
+  interface NavItem {
+    label: string;
+    to: string;
+    name: string;
+    icon: typeof LayoutDashboard;
+  }
 
-const studentNav: NavItem[] = [
-  { label: 'Dashboard', to: '/app', name: 'dashboard', icon: LayoutDashboard },
-  { label: 'Prihlášky', to: '/app/prihlasenia', name: 'student-applications', icon: FileText },
-  { label: 'Môj tím', to: '/app/tim', name: 'student-team', icon: Users },
-  { label: 'Výzvy', to: '/programy/vyzvy', name: 'challenges', icon: Rocket },
-  { label: 'Profil', to: '/app/profil', name: 'student-profile', icon: User },
-];
+  const studentNav: NavItem[] = [
+    { label: 'Dashboard', to: '/app', name: 'dashboard', icon: LayoutDashboard },
+    { label: 'Prihlášky', to: '/app/prihlasenia', name: 'student-applications', icon: FileText },
+    { label: 'Môj tím', to: '/app/tim', name: 'student-team', icon: Users },
+    { label: 'Výzvy', to: '/programy/vyzvy', name: 'challenges', icon: Rocket },
+    { label: 'Profil', to: '/app/profil', name: 'student-profile', icon: User },
+  ];
 
-const companyNav: NavItem[] = [
-  { label: 'Dashboard', to: '/app', name: 'dashboard', icon: LayoutDashboard },
-  { label: 'Projekty', to: '/app/projekty', name: 'company-projects', icon: Briefcase },
-  { label: 'Členovia', to: '/app/clenovia', name: 'company-members', icon: Users },
-  { label: 'Profil firmy', to: '/app/profil-firmy', name: 'company-profile', icon: Briefcase },
-];
+  const companyNav: NavItem[] = [
+    { label: 'Dashboard', to: '/app', name: 'dashboard', icon: LayoutDashboard },
+    { label: 'Projekty', to: '/app/projekty', name: 'company-projects', icon: Briefcase },
+    { label: 'Členovia', to: '/app/clenovia', name: 'company-members', icon: Users },
+    { label: 'Profil firmy', to: '/app/profil-firmy', name: 'company-profile', icon: Briefcase },
+  ];
 
-const navItems = computed(() =>
-  authStore.isCompany ? companyNav : studentNav,
-);
+  const navItems = computed(() => (authStore.isCompany ? companyNav : studentNav));
 
-async function handleLogout(): Promise<void> {
-  await authStore.logout();
-  await router.push({ name: 'home' });
-}
+  async function handleLogout(): Promise<void> {
+    await authStore.logout();
+    await router.push({ name: 'home' });
+  }
 </script>
 
 <template>
@@ -83,7 +81,9 @@ async function handleLogout(): Promise<void> {
           Notifikácie
         </button>
         <div class="flex items-center gap-3 px-3 py-2">
-          <div class="size-7 rounded-full bg-nti-surface border border-nti-border flex items-center justify-center shrink-0">
+          <div
+            class="size-7 rounded-full bg-nti-surface border border-nti-border flex items-center justify-center shrink-0"
+          >
             <User class="size-3.5 text-nti-gray" />
           </div>
           <div class="flex-1 min-w-0">
@@ -105,7 +105,9 @@ async function handleLogout(): Promise<void> {
 
     <!-- Main -->
     <div class="flex-1 flex flex-col min-w-0">
-      <header class="h-16 border-b border-nti-border flex items-center px-6 shrink-0 bg-nti-dark/60">
+      <header
+        class="h-16 border-b border-nti-border flex items-center px-6 shrink-0 bg-nti-dark/60"
+      >
         <p class="font-mono text-xs text-nti-muted">NTI Portál</p>
       </header>
       <main class="flex-1 p-6 overflow-auto">

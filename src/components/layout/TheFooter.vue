@@ -1,43 +1,43 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+  import { RouterLink } from 'vue-router';
 
-const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
 
-const footerLinks = [
-  {
-    title: 'Programy',
-    items: [
-      { label: 'Program A', to: '/programy/program-a' },
-      { label: 'Program B', to: '/programy/program-b' },
-      { label: 'Výzvy', to: '/programy/vyzvy' },
-      { label: 'Podmienky', to: '/programy/podmienky' },
-    ],
-  },
-  {
-    title: 'Pre firmy',
-    items: [
-      { label: 'Ako fungujú projekty', to: '/pre-firmy/ako-funguju-projekty' },
-      { label: 'Partneri', to: '/pre-firmy/partneri' },
-      { label: 'Mentori', to: '/pre-firmy/mentori' },
-    ],
-  },
-  {
-    title: 'O NTI',
-    items: [
-      { label: 'Naša misia', to: '/o-nti/nasa-misia' },
-      { label: 'FAQ', to: '/o-nti/faq' },
-      { label: 'Novinky', to: '/o-nti/novinky' },
-      { label: 'Kontakt', to: '/o-nti/kontakt' },
-    ],
-  },
-  {
-    title: 'Portál',
-    items: [
-      { label: 'Prihlásenie', to: '/auth/prihlasenie' },
-      { label: 'Registrácia', to: '/auth/registracia' },
-    ],
-  },
-];
+  const footerLinks = [
+    {
+      title: 'Programy',
+      items: [
+        { label: 'Program A', to: '/programy/program-a' },
+        { label: 'Program B', to: '/programy/program-b' },
+        { label: 'Výzvy', to: '/programy/vyzvy' },
+        { label: 'Podmienky', to: '/programy/podmienky' },
+      ],
+    },
+    {
+      title: 'Pre firmy',
+      items: [
+        { label: 'Ako fungujú projekty', to: '/pre-firmy/ako-funguju-projekty' },
+        { label: 'Partneri', to: '/pre-firmy/partneri' },
+        { label: 'Mentori', to: '/pre-firmy/mentori' },
+      ],
+    },
+    {
+      title: 'O NTI',
+      items: [
+        { label: 'Naša misia', to: '/o-nti/nasa-misia' },
+        { label: 'FAQ', to: '/o-nti/faq' },
+        { label: 'Novinky', to: '/o-nti/novinky' },
+        { label: 'Kontakt', to: '/o-nti/kontakt' },
+      ],
+    },
+    {
+      title: 'Portál',
+      items: [
+        { label: 'Prihlásenie', to: '/auth/prihlasenie' },
+        { label: 'Registrácia', to: '/auth/registracia' },
+      ],
+    },
+  ];
 </script>
 
 <template>
@@ -62,12 +62,10 @@ const footerLinks = [
         </div>
 
         <!-- Nav cols -->
-        <div
-          v-for="section in footerLinks"
-          :key="section.title"
-          class="md:col-span-1"
-        >
-          <h3 class="font-display text-xs font-semibold uppercase tracking-widest text-nti-gray-light mb-4">
+        <div v-for="section in footerLinks" :key="section.title" class="md:col-span-1">
+          <h3
+            class="font-display text-xs font-semibold uppercase tracking-widest text-nti-gray-light mb-4"
+          >
             {{ section.title }}
           </h3>
           <ul class="space-y-2">

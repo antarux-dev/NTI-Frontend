@@ -1,46 +1,47 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter, useRoute, RouterLink } from 'vue-router';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { z } from 'zod';
-import { useAuthStore } from '@/stores/auth';
-import { Eye, EyeOff, Loader2 } from 'lucide-vue-next';
+  import { ref } from 'vue';
+  import { useRouter, useRoute, RouterLink } from 'vue-router';
+  import { useForm } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
+  import { useAuthStore } from '@/stores/auth';
+  import { Eye, EyeOff, Loader2 } from 'lucide-vue-next';
 
-const router = useRouter();
-const route = useRoute();
-const authStore = useAuthStore();
-const showPassword = ref(false);
+  const router = useRouter();
+  const route = useRoute();
+  const authStore = useAuthStore();
+  const showPassword = ref(false);
 
-const schema = z.object({
-  email: z.string().min(1, 'E-mail je povinný').email('Zadajte platný e-mail'),
-  password: z.string().min(1, 'Heslo je povinné'),
-});
+  const schema = z.object({
+    email: z.string().min(1, 'E-mail je povinný').email('Zadajte platný e-mail'),
+    password: z.string().min(1, 'Heslo je povinné'),
+  });
 
-const { handleSubmit, errors, defineField, isSubmitting } = useForm({
-  validationSchema: toTypedSchema(schema),
-});
+  const { handleSubmit, errors, defineField, isSubmitting } = useForm({
+    validationSchema: toTypedSchema(schema),
+  });
 
-const [email, emailAttrs] = defineField('email');
-const [password, passwordAttrs] = defineField('password');
+  const [email, emailAttrs] = defineField('email');
+  const [password, passwordAttrs] = defineField('password');
 
-const onSubmit = handleSubmit(async (values) => {
-  await authStore.login(values);
-  const redirect = route.query.redirect as string | undefined;
-  await router.push(redirect ?? { name: 'dashboard' });
-});
+  const onSubmit = handleSubmit(async (values) => {
+    await authStore.login(values);
+    const redirect = route.query.redirect as string | undefined;
+    await router.push(redirect ?? { name: 'dashboard' });
+  });
 </script>
 
 <template>
   <div class="card-nti p-8">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="font-display text-2xl font-bold text-nti-white mb-2">
-        Prihlásenie
-      </h1>
+      <h1 class="font-display text-2xl font-bold text-nti-white mb-2">Prihlásenie</h1>
       <p class="text-sm text-nti-gray">
         Nemáte účet?
-        <RouterLink :to="{ name: 'register' }" class="text-nti-green hover:text-nti-green-light transition-colors">
+        <RouterLink
+          :to="{ name: 'register' }"
+          class="text-nti-green hover:text-nti-green-light transition-colors"
+        >
           Zaregistrujte sa
         </RouterLink>
       </p>

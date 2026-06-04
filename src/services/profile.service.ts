@@ -26,7 +26,7 @@ const ProfileService = {
   async updateStudentProfile(payload: UpdateStudentProfilePayload): Promise<StudentProfile> {
     const { data } = await apiClient.patch<ApiResponse<StudentProfile>>(
       '/profile/student',
-      payload,
+      payload
     );
     return data.data;
   },
@@ -37,7 +37,7 @@ const ProfileService = {
     const { data } = await apiClient.post<ApiResponse<{ url: string }>>(
       '/profile/student/cv',
       form,
-      { headers: { 'Content-Type': 'multipart/form-data' } },
+      { headers: { 'Content-Type': 'multipart/form-data' } }
     );
     return data.data;
   },
@@ -50,7 +50,7 @@ const ProfileService = {
   async updateCompanyProfile(payload: UpdateCompanyProfilePayload): Promise<CompanyProfile> {
     const { data } = await apiClient.patch<ApiResponse<CompanyProfile>>(
       '/profile/company',
-      payload,
+      payload
     );
     return data.data;
   },

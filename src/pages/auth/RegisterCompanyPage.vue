@@ -1,69 +1,66 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { z } from 'zod';
-import { useAuthStore } from '@/stores/auth';
-import { Eye, EyeOff, Loader2, CheckCircle } from 'lucide-vue-next';
+  import { ref } from 'vue';
+  import { RouterLink } from 'vue-router';
+  import { useForm } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
+  import { useAuthStore } from '@/stores/auth';
+  import { Eye, EyeOff, Loader2, CheckCircle } from 'lucide-vue-next';
 
-const authStore = useAuthStore();
-const showPassword = ref(false);
-const success = ref(false);
+  const authStore = useAuthStore();
+  const showPassword = ref(false);
+  const success = ref(false);
 
-const schema = z
-  .object({
-    firstName: z.string().min(2, 'Meno je povinné'),
-    lastName: z.string().min(2, 'Priezvisko je povinné'),
-    email: z.string().email('Zadajte platný e-mail'),
-    password: z.string().min(8, 'Heslo musí mať aspoň 8 znakov'),
-    passwordConfirmation: z.string().min(1, 'Potvrďte heslo'),
-    companyName: z.string().min(2, 'Názov firmy je povinný'),
-    ico: z
-      .string()
-      .min(6, 'IČO musí mať aspoň 6 znakov')
-      .max(12, 'IČO je príliš dlhé'),
-    sector: z.string().min(2, 'Sektor je povinný'),
-    gdprConsent: z.literal(true, {
-      errorMap: () => ({ message: 'Musíte súhlasiť so spracovaním údajov' }),
-    }),
-  })
-  .refine((d) => d.password === d.passwordConfirmation, {
-    message: 'Heslá sa nezhodujú',
-    path: ['passwordConfirmation'],
+  const schema = z
+    .object({
+      firstName: z.string().min(2, 'Meno je povinné'),
+      lastName: z.string().min(2, 'Priezvisko je povinné'),
+      email: z.string().email('Zadajte platný e-mail'),
+      password: z.string().min(8, 'Heslo musí mať aspoň 8 znakov'),
+      passwordConfirmation: z.string().min(1, 'Potvrďte heslo'),
+      companyName: z.string().min(2, 'Názov firmy je povinný'),
+      ico: z.string().min(6, 'IČO musí mať aspoň 6 znakov').max(12, 'IČO je príliš dlhé'),
+      sector: z.string().min(2, 'Sektor je povinný'),
+      gdprConsent: z.literal(true, {
+        errorMap: () => ({ message: 'Musíte súhlasiť so spracovaním údajov' }),
+      }),
+    })
+    .refine((d) => d.password === d.passwordConfirmation, {
+      message: 'Heslá sa nezhodujú',
+      path: ['passwordConfirmation'],
+    });
+
+  const { handleSubmit, errors, defineField, isSubmitting } = useForm({
+    validationSchema: toTypedSchema(schema),
   });
 
-const { handleSubmit, errors, defineField, isSubmitting } = useForm({
-  validationSchema: toTypedSchema(schema),
-});
+  const [firstName, firstNameAttrs] = defineField('firstName');
+  const [lastName, lastNameAttrs] = defineField('lastName');
+  const [email, emailAttrs] = defineField('email');
+  const [password, passwordAttrs] = defineField('password');
+  const [passwordConfirmation, passwordConfirmationAttrs] = defineField('passwordConfirmation');
+  const [companyName, companyNameAttrs] = defineField('companyName');
+  const [ico, icoAttrs] = defineField('ico');
+  const [sector, sectorAttrs] = defineField('sector');
+  const [gdprConsent, gdprConsentAttrs] = defineField('gdprConsent');
 
-const [firstName, firstNameAttrs] = defineField('firstName');
-const [lastName, lastNameAttrs] = defineField('lastName');
-const [email, emailAttrs] = defineField('email');
-const [password, passwordAttrs] = defineField('password');
-const [passwordConfirmation, passwordConfirmationAttrs] = defineField('passwordConfirmation');
-const [companyName, companyNameAttrs] = defineField('companyName');
-const [ico, icoAttrs] = defineField('ico');
-const [sector, sectorAttrs] = defineField('sector');
-const [gdprConsent, gdprConsentAttrs] = defineField('gdprConsent');
+  const sectors = [
+    'IT / Softvér',
+    'Fintech',
+    'Zdravotníctvo',
+    'Výroba',
+    'Obchod',
+    'Vzdelávanie',
+    'Iné',
+  ];
 
-const sectors = [
-  'IT / Softvér',
-  'Fintech',
-  'Zdravotníctvo',
-  'Výroba',
-  'Obchod',
-  'Vzdelávanie',
-  'Iné',
-];
-
-const onSubmit = handleSubmit(async (values) => {
-  await authStore.registerCompany({
-    ...values,
-    gdprConsent: values.gdprConsent as true,
+  const onSubmit = handleSubmit(async (values) => {
+    await authStore.registerCompany({
+      ...values,
+      gdprConsent: values.gdprConsent as true,
+    });
+    success.value = true;
   });
-  success.value = true;
-});
 </script>
 
 <template>
@@ -113,7 +110,9 @@ const onSubmit = handleSubmit(async (values) => {
                 :class="{ error: errors.firstName }"
                 placeholder="Ján"
               />
-              <p v-if="errors.firstName" class="mt-1 text-xs text-red-400">{{ errors.firstName }}</p>
+              <p v-if="errors.firstName" class="mt-1 text-xs text-red-400">
+                {{ errors.firstName }}
+              </p>
             </div>
             <div>
               <label for="lastName" class="label-nti">Priezvisko</label>
@@ -158,7 +157,9 @@ const onSubmit = handleSubmit(async (values) => {
               :class="{ error: errors.companyName }"
               placeholder="Acme s.r.o."
             />
-            <p v-if="errors.companyName" class="mt-1 text-xs text-red-400">{{ errors.companyName }}</p>
+            <p v-if="errors.companyName" class="mt-1 text-xs text-red-400">
+              {{ errors.companyName }}
+            </p>
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>

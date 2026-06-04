@@ -1,65 +1,65 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter, RouterLink } from 'vue-router';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { z } from 'zod';
-import { useAuthStore } from '@/stores/auth';
-import { Eye, EyeOff, Loader2, CheckCircle } from 'lucide-vue-next';
+  import { ref } from 'vue';
+  import { useRouter, RouterLink } from 'vue-router';
+  import { useForm } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
+  import { useAuthStore } from '@/stores/auth';
+  import { Eye, EyeOff, Loader2, CheckCircle } from 'lucide-vue-next';
 
-const router = useRouter();
-const authStore = useAuthStore();
-const showPassword = ref(false);
-const showPasswordConfirm = ref(false);
-const success = ref(false);  
+  const router = useRouter();
+  const authStore = useAuthStore();
+  const showPassword = ref(false);
+  const showPasswordConfirm = ref(false);
+  const success = ref(false);
 
-const schema = z
-  .object({
-    firstName: z.string().min(2, 'Meno musí mať aspoň 2 znaky'),
-    lastName: z.string().min(2, 'Priezvisko musí mať aspoň 2 znaky'),
-    email: z.string().min(1, 'E-mail je povinný').email('Zadajte platný e-mail'),
-    password: z.string().min(8, 'Heslo musí mať aspoň 8 znakov'),
-    passwordConfirmation: z.string().min(1, 'Potvrďte heslo'),
-    studyProgram: z.string().min(2, 'Zadajte študijný program'),
-    yearOfStudy: z.coerce.number().int().min(1).max(6),
-    gdprConsent: z.literal(true, {
-      errorMap: () => ({ message: 'Musíte súhlasiť so spracovaním údajov' }),
-    }),
-  })
-  .refine((d) => d.password === d.passwordConfirmation, {
-    message: 'Heslá sa nezhodujú',
-    path: ['passwordConfirmation'],
+  const schema = z
+    .object({
+      firstName: z.string().min(2, 'Meno musí mať aspoň 2 znaky'),
+      lastName: z.string().min(2, 'Priezvisko musí mať aspoň 2 znaky'),
+      email: z.string().min(1, 'E-mail je povinný').email('Zadajte platný e-mail'),
+      password: z.string().min(8, 'Heslo musí mať aspoň 8 znakov'),
+      passwordConfirmation: z.string().min(1, 'Potvrďte heslo'),
+      studyProgram: z.string().min(2, 'Zadajte študijný program'),
+      yearOfStudy: z.coerce.number().int().min(1).max(6),
+      gdprConsent: z.literal(true, {
+        errorMap: () => ({ message: 'Musíte súhlasiť so spracovaním údajov' }),
+      }),
+    })
+    .refine((d) => d.password === d.passwordConfirmation, {
+      message: 'Heslá sa nezhodujú',
+      path: ['passwordConfirmation'],
+    });
+
+  const { handleSubmit, errors, defineField, isSubmitting } = useForm({
+    validationSchema: toTypedSchema(schema),
+    initialValues: { yearOfStudy: 1 },
   });
 
-const { handleSubmit, errors, defineField, isSubmitting } = useForm({
-  validationSchema: toTypedSchema(schema),
-  initialValues: { yearOfStudy: 1 },
-});
+  const [firstName, firstNameAttrs] = defineField('firstName');
+  const [lastName, lastNameAttrs] = defineField('lastName');
+  const [email, emailAttrs] = defineField('email');
+  const [password, passwordAttrs] = defineField('password');
+  const [passwordConfirmation, passwordConfirmationAttrs] = defineField('passwordConfirmation');
+  const [studyProgram, studyProgramAttrs] = defineField('studyProgram');
+  const [yearOfStudy, yearOfStudyAttrs] = defineField('yearOfStudy');
+  const [gdprConsent, gdprConsentAttrs] = defineField('gdprConsent');
 
-const [firstName, firstNameAttrs] = defineField('firstName');
-const [lastName, lastNameAttrs] = defineField('lastName');
-const [email, emailAttrs] = defineField('email');
-const [password, passwordAttrs] = defineField('password');
-const [passwordConfirmation, passwordConfirmationAttrs] = defineField('passwordConfirmation');
-const [studyProgram, studyProgramAttrs] = defineField('studyProgram');
-const [yearOfStudy, yearOfStudyAttrs] = defineField('yearOfStudy');
-const [gdprConsent, gdprConsentAttrs] = defineField('gdprConsent');
+  const studyPrograms = [
+    'Aplikovaná informatika',
+    'Informačné technológie',
+    'Počítačové inžinierstvo',
+    'Kybernetická bezpečnosť',
+    'Iné',
+  ];
 
-const studyPrograms = [
-  'Aplikovaná informatika',
-  'Informačné technológie',
-  'Počítačové inžinierstvo',
-  'Kybernetická bezpečnosť',
-  'Iné',
-];
-
-const onSubmit = handleSubmit(async (values) => {
-  await authStore.registerStudent({
-    ...values,
-    gdprConsent: values.gdprConsent as true,
+  const onSubmit = handleSubmit(async (values) => {
+    await authStore.registerStudent({
+      ...values,
+      gdprConsent: values.gdprConsent as true,
+    });
+    success.value = true;
   });
-  success.value = true;
-});
 </script>
 
 <template>
@@ -67,24 +67,18 @@ const onSubmit = handleSubmit(async (values) => {
     <!-- Success state -->
     <div v-if="success" class="text-center py-8">
       <CheckCircle class="size-12 text-nti-green mx-auto mb-4" />
-      <h2 class="font-display text-xl font-bold text-nti-white mb-2">
-        Registrácia úspešná!
-      </h2>
+      <h2 class="font-display text-xl font-bold text-nti-white mb-2">Registrácia úspešná!</h2>
       <p class="text-nti-gray text-sm mb-6">
         Na váš e-mail bol odoslaný overovací odkaz. Po overení sa môžete prihlásiť.
       </p>
-      <RouterLink :to="{ name: 'login' }" class="btn-primary">
-        Prejsť na prihlásenie
-      </RouterLink>
+      <RouterLink :to="{ name: 'login' }" class="btn-primary"> Prejsť na prihlásenie </RouterLink>
     </div>
 
     <template v-else>
       <!-- Header -->
       <div class="mb-7">
         <p class="font-mono text-xs text-nti-green mb-1">// Registrácia</p>
-        <h1 class="font-display text-2xl font-bold text-nti-white mb-2">
-          Registrácia študenta
-        </h1>
+        <h1 class="font-display text-2xl font-bold text-nti-white mb-2">Registrácia študenta</h1>
         <p class="text-sm text-nti-gray">
           <RouterLink :to="{ name: 'register' }" class="text-nti-green hover:text-nti-green-light">
             ← Späť na výber
@@ -164,7 +158,9 @@ const onSubmit = handleSubmit(async (values) => {
               <option value="" disabled>Vybrať program</option>
               <option v-for="p in studyPrograms" :key="p" :value="p">{{ p }}</option>
             </select>
-            <p v-if="errors.studyProgram" class="mt-1 text-xs text-red-400">{{ errors.studyProgram }}</p>
+            <p v-if="errors.studyProgram" class="mt-1 text-xs text-red-400">
+              {{ errors.studyProgram }}
+            </p>
           </div>
           <div>
             <label for="yearOfStudy" class="label-nti">Ročník</label>

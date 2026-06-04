@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Component } from 'vue';
+  import type { Component } from 'vue';
 
-interface Props {
-  icon?: Component;
-  title: string;
-  description?: string;
-}
+  interface Props {
+    icon?: Component;
+    title: string;
+    description?: string;
+  }
 
-defineProps<Props>();
+  defineProps<Props>();
 </script>
 
 <template>

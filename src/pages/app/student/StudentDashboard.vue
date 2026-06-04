@@ -1,79 +1,79 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
-import { RouterLink } from 'vue-router';
-import {
-  FileText,
-  Users,
-  Clock,
-  ArrowRight,
-  Rocket,
-  ChevronRight,
-  Loader2,
-} from 'lucide-vue-next';
-import { useAuthStore } from '@/stores/auth';
-import { useApplicationStore } from '@/stores/applications';
-import NtiStatusBadge from '@/components/ui/NtiStatusBadge.vue';
-import NtiEmptyState from '@/components/ui/NtiEmptyState.vue';
+  import { onMounted, computed } from 'vue';
+  import { RouterLink } from 'vue-router';
+  import {
+    FileText,
+    Users,
+    Clock,
+    ArrowRight,
+    Rocket,
+    ChevronRight,
+    Loader2,
+  } from 'lucide-vue-next';
+  import { useAuthStore } from '@/stores/auth';
+  import { useApplicationStore } from '@/stores/applications';
+  import NtiStatusBadge from '@/components/ui/NtiStatusBadge.vue';
+  import NtiEmptyState from '@/components/ui/NtiEmptyState.vue';
 
-const authStore = useAuthStore();
-const appStore = useApplicationStore();
+  const authStore = useAuthStore();
+  const appStore = useApplicationStore();
 
-onMounted(() => {
-  void appStore.fetchApplications();
-});
+  onMounted(() => {
+    void appStore.fetchApplications();
+  });
 
-const recentApplications = computed(() => appStore.applications.slice(0, 5));
+  const recentApplications = computed(() => appStore.applications.slice(0, 5));
 
-const stats = computed(() => [
-  {
-    label: 'Prihlášky',
-    value: appStore.applications.length,
-    icon: FileText,
-    color: 'text-nti-green',
-  },
-  {
-    label: 'Aktívne',
-    value: appStore.applications.filter((a) => a.status === 'active').length,
-    icon: Rocket,
-    color: 'text-nti-green',
-  },
-  {
-    label: 'V hodnotení',
-    value: appStore.applications.filter((a) => a.status === 'under_review').length,
-    icon: Clock,
-    color: 'text-blue-400',
-  },
-  { label: 'Tím', value: 0, icon: Users, color: 'text-nti-gray' },
-]);
+  const stats = computed(() => [
+    {
+      label: 'Prihlášky',
+      value: appStore.applications.length,
+      icon: FileText,
+      color: 'text-nti-green',
+    },
+    {
+      label: 'Aktívne',
+      value: appStore.applications.filter((a) => a.status === 'active').length,
+      icon: Rocket,
+      color: 'text-nti-green',
+    },
+    {
+      label: 'V hodnotení',
+      value: appStore.applications.filter((a) => a.status === 'under_review').length,
+      icon: Clock,
+      color: 'text-blue-400',
+    },
+    { label: 'Tím', value: 0, icon: Users, color: 'text-nti-gray' },
+  ]);
 
-const quickActions = [
-  {
-    label: 'Podať prihlášku',
-    desc: 'Zobraziť aktívne výzvy',
-    to: { name: 'challenges' },
-    icon: Rocket,
-  },
-  {
-    label: 'Môj tím',
-    desc: 'Spravovať tím a členov',
-    to: { name: 'student-team' },
-    icon: Users,
-  },
-  {
-    label: 'Môj profil',
-    desc: 'Upraviť profil a CV',
-    to: { name: 'student-profile' },
-    icon: FileText,
-  },
-];
+  const quickActions = [
+    {
+      label: 'Podať prihlášku',
+      desc: 'Zobraziť aktívne výzvy',
+      to: { name: 'challenges' },
+      icon: Rocket,
+    },
+    {
+      label: 'Môj tím',
+      desc: 'Spravovať tím a členov',
+      to: { name: 'student-team' },
+      icon: Users,
+    },
+    {
+      label: 'Môj profil',
+      desc: 'Upraviť profil a CV',
+      to: { name: 'student-profile' },
+      icon: FileText,
+    },
+  ];
 
-function formatDate(dateStr: string): string {
-  return new Intl.DateTimeFormat('sk-SK', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(new Date(dateStr));
-}
+  function formatDate(dateStr: string): string {
+    return new Intl.DateTimeFormat('sk-SK', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    }).format(new Date(dateStr));
+  }
 </script>
 
 <template>
@@ -89,11 +89,7 @@ function formatDate(dateStr: string): string {
 
     <!-- Stats row -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-      <div
-        v-for="stat in stats"
-        :key="stat.label"
-        class="card-nti p-5"
-      >
+      <div v-for="stat in stats" :key="stat.label" class="card-nti p-5">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs text-nti-gray font-mono">{{ stat.label }}</span>
           <component :is="stat.icon" class="size-4" :class="stat.color" />
@@ -143,11 +139,15 @@ function formatDate(dateStr: string): string {
             class="card-nti group flex items-center justify-between p-4 block"
           >
             <div class="flex items-center gap-4 min-w-0">
-              <div class="size-9 rounded-lg bg-nti-surface border border-nti-border flex items-center justify-center shrink-0">
+              <div
+                class="size-9 rounded-lg bg-nti-surface border border-nti-border flex items-center justify-center shrink-0"
+              >
                 <FileText class="size-4 text-nti-gray" />
               </div>
               <div class="min-w-0">
-                <p class="text-sm font-medium text-nti-white truncate group-hover:text-nti-green transition-colors">
+                <p
+                  class="text-sm font-medium text-nti-white truncate group-hover:text-nti-green transition-colors"
+                >
                   {{ app.callTitle }}
                 </p>
                 <p class="text-xs text-nti-muted font-mono">
@@ -157,7 +157,9 @@ function formatDate(dateStr: string): string {
             </div>
             <div class="flex items-center gap-3 shrink-0">
               <NtiStatusBadge :status="app.status" />
-              <ChevronRight class="size-4 text-nti-muted group-hover:text-nti-green transition-colors" />
+              <ChevronRight
+                class="size-4 text-nti-muted group-hover:text-nti-green transition-colors"
+              />
             </div>
           </RouterLink>
         </div>
@@ -173,16 +175,22 @@ function formatDate(dateStr: string): string {
             :to="action.to"
             class="card-nti group flex items-center gap-4 p-4 block"
           >
-            <div class="size-9 rounded-lg bg-nti-green-dim border border-nti-green/20 flex items-center justify-center shrink-0">
+            <div
+              class="size-9 rounded-lg bg-nti-green-dim border border-nti-green/20 flex items-center justify-center shrink-0"
+            >
               <component :is="action.icon" class="size-4 text-nti-green" />
             </div>
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-nti-white group-hover:text-nti-green transition-colors">
+              <p
+                class="text-sm font-medium text-nti-white group-hover:text-nti-green transition-colors"
+              >
                 {{ action.label }}
               </p>
               <p class="text-xs text-nti-muted">{{ action.desc }}</p>
             </div>
-            <ChevronRight class="size-4 text-nti-muted group-hover:text-nti-green transition-colors shrink-0" />
+            <ChevronRight
+              class="size-4 text-nti-muted group-hover:text-nti-green transition-colors shrink-0"
+            />
           </RouterLink>
         </div>
       </div>

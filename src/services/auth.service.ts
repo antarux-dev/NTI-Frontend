@@ -44,7 +44,11 @@ const AuthService = {
     await apiClient.post('/auth/password/forgot', { email });
   },
 
-  async resetPassword(token: string, password: string, passwordConfirmation: string): Promise<void> {
+  async resetPassword(
+    token: string,
+    password: string,
+    passwordConfirmation: string
+  ): Promise<void> {
     await apiClient.post('/auth/password/reset', {
       token,
       password,
