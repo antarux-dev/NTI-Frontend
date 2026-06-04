@@ -11,7 +11,7 @@ const router = useRouter();
 const authStore = useAuthStore();
 const showPassword = ref(false);
 const showPasswordConfirm = ref(false);
-const success = ref(false);
+const success = ref(false); 
 
 const schema = z
   .object({
