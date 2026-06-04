@@ -1,12 +1,13 @@
 <script setup lang="ts">
-  import TheNavbar from '@components/TheNavbar.vue';
-  import TheFooter from '@components/TheFooter.vue';
+import { RouterView } from 'vue-router';
+import ToastContainer from '@/components/ui/ToastContainer.vue';
 </script>
 
 <template>
-  <TheNavbar />
-  <main>
-    <RouterView />
-  </main>
-  <TheFooter />
+  <RouterView v-slot="{ Component, route }">
+    <Transition name="page" mode="out-in">
+      <component :is="Component" :key="route.path" />
+    </Transition>
+  </RouterView>
+  <ToastContainer />
 </template>
