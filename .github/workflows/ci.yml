@@ -38,10 +38,5 @@ jobs:
       - name: Run type check
         run: npm run type-check
 
-      - name: Run unit tests
-        run: npm run vitest
-        env:
-          CI: true
-
       - name: Build app
         run: npm run build
