@@ -14,6 +14,11 @@
     globalError.value = err.message ?? 'Nastala neočakávaná chyba.';
     return false;
   });
+
+  function reloadPage(): void {
+    globalError.value = null;
+    window.location.reload();
+  }
 </script>
 
 <template>
@@ -26,15 +31,7 @@
       <AlertCircle class="size-12 text-red-400 mx-auto mb-4" />
       <h1 class="font-display text-xl font-bold text-nti-white mb-2">Niečo sa pokazilo</h1>
       <p class="text-sm text-nti-gray mb-6">{{ globalError }}</p>
-      <button
-        class="btn-primary"
-        @click="
-          globalError = null;
-          window.location.reload();
-        "
-      >
-        Obnoviť stránku
-      </button>
+      <button class="btn-primary" @click="reloadPage">Obnoviť stránku</button>
     </div>
   </div>
 
