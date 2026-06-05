@@ -153,6 +153,24 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/pages/auth/RegisterMemberPage.vue'),
         meta: { title: 'Registrácia člena firmy — NTI', guest: true },
       },
+      {
+        path: 'zabudnute-heslo',
+        name: 'forgot-password',
+        component: () => import('@/pages/auth/ForgotPasswordPage.vue'),
+        meta: { title: 'Zabudnuté heslo — NTI', guest: true },
+      },
+      {
+        path: 'reset-heslo',
+        name: 'reset-password',
+        component: () => import('@/pages/auth/ResetPasswordPage.vue'),
+        meta: { title: 'Nové heslo — NTI', guest: true },
+      },
+      {
+        path: 'overenie-emailu/:id/:hash',
+        name: 'email-verify',
+        component: () => import('@/pages/auth/EmailVerifyPage.vue'),
+        meta: { title: 'Overenie e-mailu — NTI' },
+      },
     ],
   },
 
@@ -168,6 +186,18 @@ const routes: RouteRecordRaw[] = [
         name: 'dashboard',
         component: () => import('@/pages/app/student/StudentDashboard.vue'),
         meta: { title: 'Dashboard — NTI' },
+      },
+      {
+        path: 'notifikacie',
+        name: 'notifications',
+        component: () => import('@/pages/app/shared/NotificationsPage.vue'),
+        meta: { title: 'Notifikácie — NTI' },
+      },
+      {
+        path: 'nastavenia',
+        name: 'profile-settings',
+        component: () => import('@/pages/app/shared/ProfileSettingsPage.vue'),
+        meta: { title: 'Nastavenia — NTI' },
       },
 
       // ── Student routes ────────────────────────────────────────────────
@@ -198,8 +228,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'tim',
         name: 'student-team',
-        // lazy placeholder – extend later
-        component: () => import('@/pages/app/student/StudentDashboard.vue'),
+        component: () => import('@/pages/app/student/StudentTeamPage.vue'),
         meta: { title: 'Môj tím — NTI' },
       },
 
@@ -213,20 +242,26 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'projekty',
         name: 'company-projects',
-        component: () => import('@/pages/app/company/CompanyDashboard.vue'),
+        component: () => import('@/pages/app/company/CompanyProjectsPage.vue'),
         meta: { title: 'Projekty — NTI' },
       },
       {
         path: 'projekty/novy',
         name: 'company-new-project',
-        component: () => import('@/pages/app/company/CompanyDashboard.vue'),
+        component: () => import('@/pages/app/company/CompanyNewProjectPage.vue'),
         meta: { title: 'Nový projekt — NTI' },
       },
       {
         path: 'clenovia',
         name: 'company-members',
-        component: () => import('@/pages/app/company/CompanyDashboard.vue'),
+        component: () => import('@/pages/app/company/CompanyMembersPage.vue'),
         meta: { title: 'Členovia — NTI' },
+      },
+      {
+        path: 'mentor',
+        name: 'mentor-dashboard',
+        component: () => import('@/pages/app/mentor/MentorDashboard.vue'),
+        meta: { title: 'Mentor Dashboard — NTI' },
       },
     ],
   },

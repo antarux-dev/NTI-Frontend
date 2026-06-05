@@ -11,7 +11,7 @@
     modelValue?: string | number;
   }
 
-  const props = withDefaults(defineProps<Props>(), {
+  withDefaults(defineProps<Props>(), {
     id: undefined,
     label: undefined,
     type: 'text',

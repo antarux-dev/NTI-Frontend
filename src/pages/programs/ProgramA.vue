@@ -11,7 +11,6 @@
     Gamepad2,
     Zap,
     Users,
-    Calendar,
     ChevronRight,
   } from 'lucide-vue-next';
 </script>

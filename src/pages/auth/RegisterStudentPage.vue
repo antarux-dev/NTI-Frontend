@@ -1,13 +1,12 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { useRouter, RouterLink } from 'vue-router';
+  import { RouterLink } from 'vue-router';
   import { useForm } from 'vee-validate';
   import { toTypedSchema } from '@vee-validate/zod';
   import { z } from 'zod';
   import { useAuthStore } from '@/stores/auth';
   import { Eye, EyeOff, Loader2, CheckCircle } from 'lucide-vue-next';
 
-  const router = useRouter();
   const authStore = useAuthStore();
   const showPassword = ref(false);
   const showPasswordConfirm = ref(false);

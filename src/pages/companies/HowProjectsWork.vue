@@ -19,7 +19,7 @@
       <div class="container-nti max-w-3xl">
         <div class="space-y-5">
           <div
-            v-for="(step, i) in [
+            v-for="step in [
               {
                 phase: '01',
                 title: 'Registrácia a profil firmy',

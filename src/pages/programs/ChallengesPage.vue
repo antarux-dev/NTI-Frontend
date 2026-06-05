@@ -7,7 +7,6 @@
 
   const calls = ref<Call[]>([]);
   const loading = ref(true);
-  const error = ref<string | null>(null);
 
   // Placeholder data until backend is ready
   const placeholderCalls: Call[] = [

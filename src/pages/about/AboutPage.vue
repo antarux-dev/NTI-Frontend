@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { ArrowRight, Rocket, Briefcase, Users, Star, Globe, ChevronRight } from 'lucide-vue-next';
+  import { ArrowRight, Rocket, Briefcase, Users, Star, Globe } from 'lucide-vue-next';
 </script>
 
 <template>

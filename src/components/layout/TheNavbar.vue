@@ -210,7 +210,7 @@
 
         <!-- ── Mobile toggle ─────────────────────────────────────────── -->
         <button
-          class="md:hidden btn-ghost"
+          class="mobile-toggle-btn btn-ghost"
           :aria-label="mobileOpen ? 'Zavrieť menu' : 'Otvoriť menu'"
           :aria-expanded="mobileOpen"
           @click="mobileOpen = !mobileOpen"
@@ -323,5 +323,17 @@
   .mobile-menu-leave-to {
     opacity: 0;
     max-height: 0 !important;
+  }
+
+  /* ── Responsive visibility — mobile toggle ───────────────────────────── */
+  /* Hidden on desktop (>=768px), visible only on mobile */
+  .mobile-toggle-btn {
+    display: flex;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-toggle-btn {
+      display: none !important;
+    }
   }
 </style>

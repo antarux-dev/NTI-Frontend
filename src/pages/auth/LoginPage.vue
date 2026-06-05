@@ -114,6 +114,14 @@
         <Loader2 v-if="isSubmitting" class="size-4 animate-spin" />
         <template v-else>Prihlásiť sa</template>
       </button>
+      <div class="flex justify-end mt-1">
+        <RouterLink
+          :to="{ name: 'forgot-password' }"
+          class="text-xs text-nti-muted hover:text-nti-gray transition-colors"
+        >
+          Zabudli ste heslo?
+        </RouterLink>
+      </div>
     </form>
   </div>
 </template>

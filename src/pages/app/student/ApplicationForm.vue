@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue';
-  import { useRouter, useRoute, RouterLink } from 'vue-router';
+  import { useRoute, RouterLink } from 'vue-router';
   import { useForm } from 'vee-validate';
   import { toTypedSchema } from '@vee-validate/zod';
   import { z } from 'zod';
@@ -11,7 +11,6 @@
   import NtiAlert from '@/components/ui/NtiAlert.vue';
   import type { Call } from '@/types';
 
-  const router = useRouter();
   const route = useRoute();
   const appStore = useApplicationStore();
 
